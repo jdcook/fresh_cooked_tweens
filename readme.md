@@ -2,7 +2,10 @@
 A tweening library by Jared Cook
 
 ### C++:
-`FCTween::Play(GetActorLocation(), GetActorLocation() + FVector(0, 0, 50), [&](FVector t) { SetActorLocation(t); }, 2.0f, EFCEase::OutCubic);`
+
+```c++
+FCTween::Play(GetActorLocation(), GetActorLocation() + FVector(0, 0, 50), [&](FVector t) { SetActorLocation(t); }, 2.0f, EFCEase::OutCubic);
+```
 
 ### Blueprints:
 ![](readme_imgs/basic_usage_bp.png)
