@@ -4,7 +4,15 @@ A tweening library by Jared Cook
 ### C++:
 
 ```c++
-FCTween::Play(GetActorLocation(), GetActorLocation() + FVector(0, 0, 50), [&](FVector t) { SetActorLocation(t); }, 2.0f, EFCEase::OutCubic);
+FCTween::Play(
+    GetActorLocation(),
+    GetActorLocation() + FVector(0, 0, 50),
+    [&](FVector t)
+    {
+        SetActorLocation(t);
+    },
+    2.0f,
+    EFCEase::OutCubic);
 ```
 
 ### Blueprints:
@@ -223,8 +231,7 @@ Same as ease, but you can override the baked in parameters for Elastic, Bounce, 
 <details>
 <summary>Expand</summary>
 
-## Setup
-Add FCTween as a module.
+## Module Setup
 - Copy the FCTween directory into your Source folder.
 
 ![](readme_imgs/srcdir.png)
@@ -252,17 +259,17 @@ PublicDependencyModuleNames.AddRange(new[] {"Core", "CoreUObject", "PhysicsCore"
 
 ## Basic Usage
 
-- You can tween Floats, Vectors, and Quaternions
+- You can tween Floats, Vectors, Vector2Ds, and Quaternions
 - Pass a lambda expression to FCTween::Play() for the update functionality.
 
 Basic example:
 ```c++
-FCTween::Play(0, 1, [&](float t) { ++this->Foo; }, .5f);
+FCTween::Play(0, 1, [&](float t) { Foo = t; }, .5f);
 ```
 
 With options:
 ```c++
-FCTween::Play(0, 1, [&](float t) { ++this->Foo; }, .5f, EFCEase::OutElastic)
+FCTween::Play(0, 1, [&](float t) { Foo = t }, .5f, EFCEase::OutElastic)
     ->SetLoops(2)
     ->SetYoyo(true)
     ->SetOnLoop([&]() { /* on loop functionality */ });
@@ -293,6 +300,49 @@ FCTween::Play(
 
 Todo
 
+## Safety / avoiding errors
+
+If your tween's update is calling code on an actor, and that actor gets destroyed, but the tween system is still running the tween, your update lambda will throw an error.
+
+To avoid this, you could:
+
+- **Manually keep track of the pointer and destroy it when you need to**
+  - You will need to do this with some tweens anyway, if your game's logic needs to interrupt it, or if it's infinitely looping. Examples for that in the next section.
+
+  
+- **Call `FCTween::ClearActiveTweens()`**
+  - This is useful for changing levels, if you know you want all tweens to stop executing
+
+
+- **Make the lamda itself safe**
+  - This is useful for a non-looping tween that you just want to fire and forget, and there are some edge cases where the object is destroyed before it's finished - and you'd rather it just did its last few updates and cleaned itself up.
+```c++
+FCTween::Play(
+    GetActorLocation(), GetActorLocation() + FVector(0, 0, 50),
+    [&](FVector t)
+    {
+        if (IsValid(this))
+        {
+            SetActorLocation(t);
+        }
+    },
+    2.0f);
+```
+
+- **Use UFCTweenUObject**
+  - This is a simple UObject wrapper class. You can save this as a UPROPERTY and it will clean up the tween in BeginDestroy().
+  - This is nice for something like an item pickup that has a looping tween animation you set up in code, and you want it to get auto-cleaned up when the pickup is destroyed instead of manually managing it.
+```c++
+UPROPERTY()
+UFCTweenUObject* TweenObj;
+	
+TweenObj = FCTween::Play()
+    ->CreateUObject();
+```
+
+- **Make a "safe mode" by modifying the library to add try/catch statements around lambda execution in FCTweenInstance, and enable exceptions in the build options**
+  - I didn't add this option because it's a controversial move in the C++ world, and the moment I started thinking about how to add it, I sensed a great disturbance, as if millions of voices suddenly cried out in disgust. And, honestly, the other options seem like a better way to handle it.
+
 ## Tween Pointers
 
 ```c++
@@ -319,7 +369,7 @@ public:
 		Super::BeginPlay();
 
 		// tween a float from 0 to 1, over .5 seconds, infinitely looping
-		Tween = FCTween::Play(0, 1, [&](float t) { ++this->Foo; }, .5f)
+		Tween = FCTween::Play(0, 1, [&](float t) { Foo = t; }, .5f)
 		    ->SetLoops(-1);
 	}
 
@@ -372,7 +422,7 @@ public:
 
 		ManualTween = new FCTweenInstanceVector();
 		ManualTween->Initialize(
-			FVector::ZeroVector, FVector::OneVector, [&](FVector t) { ++this->Foo; }, .5f, EFCEase::OutQuad);
+			FVector::ZeroVector, FVector::OneVector, [&](FVector t) { SetActorLocation(t); }, .5f, EFCEase::OutQuad);
 		ManualTween->SetYoyo(true)
 		    ->SetLoops(-1);
 	}
