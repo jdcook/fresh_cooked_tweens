@@ -41,12 +41,12 @@ void FCTween::EnsureCapacity(int NumTweens)
 	EnsureCapacity(NumTweens, NumTweens, NumTweens, NumTweens);
 }
 
-void FCTween::Update(float DeltaTime, bool bIsGamePaused)
+void FCTween::Update(float UnscaledDeltaSeconds, float DilatedDeltaSeconds, bool bIsGamePaused)
 {
-	FloatTweenManager->Update(DeltaTime, bIsGamePaused);
-	VectorTweenManager->Update(DeltaTime, bIsGamePaused);
-	Vector2DTweenManager->Update(DeltaTime, bIsGamePaused);
-	QuatTweenManager->Update(DeltaTime, bIsGamePaused);
+	FloatTweenManager->Update(UnscaledDeltaSeconds, DilatedDeltaSeconds, bIsGamePaused);
+	VectorTweenManager->Update(UnscaledDeltaSeconds, DilatedDeltaSeconds, bIsGamePaused);
+	Vector2DTweenManager->Update(UnscaledDeltaSeconds, DilatedDeltaSeconds, bIsGamePaused);
+	QuatTweenManager->Update(UnscaledDeltaSeconds, DilatedDeltaSeconds, bIsGamePaused);
 }
 
 void FCTween::ClearActiveTweens()

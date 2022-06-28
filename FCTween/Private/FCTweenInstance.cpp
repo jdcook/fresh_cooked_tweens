@@ -56,6 +56,12 @@ FCTweenInstance* FCTweenInstance::SetCanTickDuringPause(bool bInCanTickDuringPau
 	return this;
 }
 
+FCTweenInstance* FCTweenInstance::SetUseGlobalTimeDilation(bool bInUseGlobalTimeDilation)
+{
+	this->bUseGlobalTimeDilation = bInUseGlobalTimeDilation;
+	return this;
+}
+
 FCTweenInstance* FCTweenInstance::SetAutoDestroy(bool bInShouldAutoDestroy)
 {
 	this->bShouldAutoDestroy = bInShouldAutoDestroy;
@@ -100,6 +106,7 @@ void FCTweenInstance::Initialize(float InDurationSecs, EFCEase InEaseType)
 	bShouldYoyo = false;
 	bIsPlayingYoyo = false;
 	bCanTickDuringPause = false;
+	bUseGlobalTimeDilation = true;
 
 	NumLoops = 1;
 	NumLoopsCompleted = 0;
@@ -167,13 +174,14 @@ void FCTweenInstance::Unpause()
 	bIsPaused = false;
 }
 
-void FCTweenInstance::Update(float DeltaTime, bool bIsGamePaused)
+void FCTweenInstance::Update(float UnscaledDeltaSeconds, float DilatedDeltaSeconds, bool bIsGamePaused)
 {
 	if (bIsPaused || !bIsActive || bIsGamePaused && !bCanTickDuringPause)
 	{
 		return;
 	}
 
+	float DeltaTime = bUseGlobalTimeDilation ? DilatedDeltaSeconds : UnscaledDeltaSeconds;
 	DeltaTime *= TimeMultiplier;
 
 	if (DelayCounter > 0)

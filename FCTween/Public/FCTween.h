@@ -29,7 +29,7 @@ public:
 	 * be needing more and don't want to allocate memory during the game.
 	 */
 	static void EnsureCapacity(int NumTweens);
-	static void Update(float DeltaTime, bool bIsGamePaused);
+	static void Update(float UnscaledDeltaSeconds, float DilatedDeltaSeconds, bool bIsGamePaused);
 	static void ClearActiveTweens();
 
 	/**

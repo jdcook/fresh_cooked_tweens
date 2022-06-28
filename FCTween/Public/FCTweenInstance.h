@@ -29,6 +29,7 @@ public:
 	uint8 bShouldYoyo : 1;
 	uint8 bIsPlayingYoyo : 1;
 	uint8 bCanTickDuringPause : 1;
+	uint8 bUseGlobalTimeDilation : 1;
 
 	int NumLoops;
 	int NumLoopsCompleted;
@@ -99,6 +100,11 @@ public:
 	FCTweenInstance* SetCanTickDuringPause(bool bInCanTickDuringPause);
 
 	/**
+	 * @brief let this tween run while the game is paused
+	 */
+	FCTweenInstance* SetUseGlobalTimeDilation(bool bInUseGlobalTimeDilation);
+
+	/**
 	 * @brief Automatically recycles this instance after tween is complete (Stop() is called)
 	 */
 	FCTweenInstance* SetAutoDestroy(bool bInShouldAutoDestroy);
@@ -129,7 +135,7 @@ public:
 	UFCTweenUObject* CreateUObject(UObject* Outer = (UObject*) GetTransientPackage());
 	void Pause();
 	void Unpause();
-	void Update(float DeltaTime, bool bIsGamePaused);
+	void Update(float UnscaledDeltaSeconds, float DilatedDeltaSeconds, bool bIsGamePaused = false);
 
 protected:
 	virtual void ApplyEasing(float EasedPercent) = 0;

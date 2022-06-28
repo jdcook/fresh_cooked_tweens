@@ -19,6 +19,7 @@ public:
 	bool bYoyo;
 	float YoyoDelay;
 	bool bCanTickDuringPause;
+	bool bUseGlobalTimeDilation;
 	float EaseParam1;
 	float EaseParam2;
 
@@ -41,7 +42,7 @@ public:
 	virtual FCTweenInstance* CreateTween();
 	virtual FCTweenInstance* CreateTweenCustomCurve();
 	virtual void SetSharedTweenProperties(float InDurationSecs, float InDelay, int InLoops, float InLoopDelay, bool InbYoyo,
-		float InYoyoDelay, bool InbCanTickDuringPause);
+		float InYoyoDelay, bool bInCanTickDuringPause, bool bInUseGlobalTimeDilation);
 	virtual void BeginDestroy() override;
 
 	UFUNCTION(BlueprintCallable, Category = "Tween")

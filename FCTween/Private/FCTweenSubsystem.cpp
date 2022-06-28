@@ -28,7 +28,7 @@ void UFCTweenSubsystem::Tick(float DeltaTime)
 
 		if (GetWorld() != nullptr)
 		{
-			FCTween::Update(DeltaTime, GetWorld()->IsPaused());
+			FCTween::Update(GetWorld()->DeltaRealTimeSeconds, GetWorld()->DeltaTimeSeconds, GetWorld()->IsPaused());
 		}
 	}
 }

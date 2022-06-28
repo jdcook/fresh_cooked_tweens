@@ -58,7 +58,7 @@ public:
 		}
 	}
 
-	void Update(float DeltaTime, bool bIsGamePaused)
+	void Update(float UnscaledDeltaSeconds, float DilatedDeltaSeconds, bool bIsGamePaused)
 	{
 		// add pending tweens
 		TNode* CurNode = TweensToActivate->GetHead();
@@ -76,7 +76,7 @@ public:
 		while (CurNode != nullptr)
 		{
 			FCTweenInstance* CurTween = static_cast<FCTweenInstance*>(CurNode->GetValue());
-			CurTween->Update(DeltaTime, bIsGamePaused);
+			CurTween->Update(UnscaledDeltaSeconds, DilatedDeltaSeconds, bIsGamePaused);
 			TNode* NextNode = CurNode->GetNextNode();
 			if (!CurTween->bIsActive)
 			{

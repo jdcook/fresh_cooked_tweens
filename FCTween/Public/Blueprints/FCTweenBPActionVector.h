@@ -38,7 +38,7 @@ public:
 	static UFCTweenBPActionVector* TweenVector(FVector Start = FVector::ZeroVector, FVector End = FVector::ZeroVector,
 		float DurationSecs = 1.0f, EFCEase EaseType = EFCEase::InOutQuad, float EaseParam1 = 0, float EaseParam2 = 0,
 		float Delay = 0, int Loops = 0, float LoopDelay = 0, bool bYoyo = false, float YoyoDelay = 0,
-		bool bCanTickDuringPause = false);
+		bool bCanTickDuringPause = false, bool bUseGlobalTimeDilation = true);
 	/**
 	 * @brief Tween a float parameter between the given values
 	 * @param Start The starting value
@@ -55,7 +55,7 @@ public:
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", AdvancedDisplay = "4"), Category = "Tween|Custom Curve")
 	static UFCTweenBPActionVector* TweenVectorCustomCurve(FVector Start = FVector::ZeroVector, FVector End = FVector::ZeroVector,
 		float DurationSecs = 1.0f, UCurveFloat* Curve = nullptr, float Delay = 0, int Loops = 0, float LoopDelay = 0,
-		bool bYoyo = false, float YoyoDelay = 0, bool bCanTickDuringPause = false);
+		bool bYoyo = false, float YoyoDelay = 0, bool bCanTickDuringPause = false, bool bUseGlobalTimeDilation = true);
 
 	virtual FCTweenInstance* CreateTween() override;
 	virtual FCTweenInstance* CreateTweenCustomCurve() override;

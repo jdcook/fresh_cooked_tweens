@@ -43,6 +43,7 @@ void UFCTweenBPAction::Activate()
 		->SetYoyo(bYoyo)
 		->SetYoyoDelay(YoyoDelay)
 		->SetCanTickDuringPause(bCanTickDuringPause)
+		->SetUseGlobalTimeDilation(bUseGlobalTimeDilation)
 		// we will tell it when to be destroyed on complete, so that we control when
 		// the tween goes invalid and it can't get recycled by doing something unexpected in BPs
 		->SetAutoDestroy(false)
@@ -80,7 +81,7 @@ FCTweenInstance* UFCTweenBPAction::CreateTweenCustomCurve()
 }
 
 void UFCTweenBPAction::SetSharedTweenProperties(float InDurationSecs, float InDelay, int InLoops, float InLoopDelay, bool InbYoyo,
-	float InYoyoDelay, bool InbCanTickDuringPause)
+	float InYoyoDelay, bool bInCanTickDuringPause, bool bInUseGlobalTimeDilation)
 {
 	TweenInstance = nullptr;
 	bUseCustomCurve = false;
@@ -91,7 +92,8 @@ void UFCTweenBPAction::SetSharedTweenProperties(float InDurationSecs, float InDe
 	LoopDelay = InLoopDelay;
 	bYoyo = InbYoyo;
 	YoyoDelay = InYoyoDelay;
-	bCanTickDuringPause = InbCanTickDuringPause;
+	bCanTickDuringPause = bInCanTickDuringPause;
+	bUseGlobalTimeDilation = bInUseGlobalTimeDilation;
 }
 
 void UFCTweenBPAction::BeginDestroy()

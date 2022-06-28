@@ -4,10 +4,11 @@
 
 UFCTweenBPActionVector2D* UFCTweenBPActionVector2D::TweenVector2D(FVector2D Start, FVector2D End, float DurationSecs,
 	EFCEase EaseType, float EaseParam1, float EaseParam2, float Delay, int Loops, float LoopDelay, bool bYoyo, float YoyoDelay,
-	bool bCanTickDuringPause)
+	bool bCanTickDuringPause, bool bUseGlobalTimeDilation)
 {
 	UFCTweenBPActionVector2D* BlueprintNode = NewObject<UFCTweenBPActionVector2D>();
-	BlueprintNode->SetSharedTweenProperties(DurationSecs, Delay, Loops, LoopDelay, bYoyo, YoyoDelay, bCanTickDuringPause);
+	BlueprintNode->SetSharedTweenProperties(
+		DurationSecs, Delay, Loops, LoopDelay, bYoyo, YoyoDelay, bCanTickDuringPause, bUseGlobalTimeDilation);
 	BlueprintNode->EaseType = EaseType;
 	BlueprintNode->Start = Start;
 	BlueprintNode->End = End;
@@ -17,10 +18,12 @@ UFCTweenBPActionVector2D* UFCTweenBPActionVector2D::TweenVector2D(FVector2D Star
 }
 
 UFCTweenBPActionVector2D* UFCTweenBPActionVector2D::TweenVector2DCustomCurve(FVector2D Start, FVector2D End, float DurationSecs,
-	UCurveFloat* Curve, float Delay, int Loops, float LoopDelay, bool bYoyo, float YoyoDelay, bool bCanTickDuringPause)
+	UCurveFloat* Curve, float Delay, int Loops, float LoopDelay, bool bYoyo, float YoyoDelay, bool bCanTickDuringPause,
+	bool bUseGlobalTimeDilation)
 {
 	UFCTweenBPActionVector2D* BlueprintNode = NewObject<UFCTweenBPActionVector2D>();
-	BlueprintNode->SetSharedTweenProperties(DurationSecs, Delay, Loops, LoopDelay, bYoyo, YoyoDelay, bCanTickDuringPause);
+	BlueprintNode->SetSharedTweenProperties(
+		DurationSecs, Delay, Loops, LoopDelay, bYoyo, YoyoDelay, bCanTickDuringPause, bUseGlobalTimeDilation);
 	BlueprintNode->CustomCurve = Curve;
 	BlueprintNode->bUseCustomCurve = true;
 	BlueprintNode->Start = Start;

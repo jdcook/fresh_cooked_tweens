@@ -4,10 +4,11 @@
 
 UFCTweenBPActionRotator* UFCTweenBPActionRotator::TweenRotator(FRotator Start, FRotator End, float DurationSecs, EFCEase EaseType,
 	float EaseParam1, float EaseParam2, float Delay, int Loops, float LoopDelay, bool bYoyo, float YoyoDelay,
-	bool bCanTickDuringPause)
+	bool bCanTickDuringPause, bool bUseGlobalTimeDilation)
 {
 	UFCTweenBPActionRotator* BlueprintNode = NewObject<UFCTweenBPActionRotator>();
-	BlueprintNode->SetSharedTweenProperties(DurationSecs, Delay, Loops, LoopDelay, bYoyo, YoyoDelay, bCanTickDuringPause);
+	BlueprintNode->SetSharedTweenProperties(
+		DurationSecs, Delay, Loops, LoopDelay, bYoyo, YoyoDelay, bCanTickDuringPause, bUseGlobalTimeDilation);
 	BlueprintNode->EaseType = EaseType;
 	BlueprintNode->Start = Start.Quaternion();
 	BlueprintNode->End = End.Quaternion();
@@ -17,10 +18,12 @@ UFCTweenBPActionRotator* UFCTweenBPActionRotator::TweenRotator(FRotator Start, F
 }
 
 UFCTweenBPActionRotator* UFCTweenBPActionRotator::TweenRotatorCustomCurve(FRotator Start, FRotator End, float DurationSecs,
-	UCurveFloat* Curve, float Delay, int Loops, float LoopDelay, bool bYoyo, float YoyoDelay, bool bCanTickDuringPause)
+	UCurveFloat* Curve, float Delay, int Loops, float LoopDelay, bool bYoyo, float YoyoDelay, bool bCanTickDuringPause,
+	bool bUseGlobalTimeDilation)
 {
 	UFCTweenBPActionRotator* BlueprintNode = NewObject<UFCTweenBPActionRotator>();
-	BlueprintNode->SetSharedTweenProperties(DurationSecs, Delay, Loops, LoopDelay, bYoyo, YoyoDelay, bCanTickDuringPause);
+	BlueprintNode->SetSharedTweenProperties(
+		DurationSecs, Delay, Loops, LoopDelay, bYoyo, YoyoDelay, bCanTickDuringPause, bUseGlobalTimeDilation);
 	BlueprintNode->CustomCurve = Curve;
 	BlueprintNode->bUseCustomCurve = true;
 	BlueprintNode->Start = Start.Quaternion();
