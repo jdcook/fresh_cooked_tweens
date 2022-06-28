@@ -297,8 +297,25 @@ FCTween::Play(
 ```
 
 ## Setting start/end values during execution
+Use the specific derived class to set `StartValue` or `EndValue` during execution.
 
-Todo
+```c++
+FCTweenInstanceVector* Tween = nullptr;
+
+virtual void BeginPlay() override
+{
+    Tween = FCTween::Play(
+        Target1->GetActorLocation(), Target2->GetActorLocation(), [&](FVector t) { SetActorLocation(t); }, 10.0f);
+    // the set functions return the base tween class, just be aware you'll have to static_cast it 
+    // if you include it in the same line
+    Tween->SetLoops(-1);
+}
+virtual void Tick(float DeltaSeconds) override
+{
+    Tween->StartValue = Target1->GetActorLocation();
+    Tween->EndValue = Target2->GetActorLocation();
+}
+```
 
 ## Safety / avoiding errors
 
@@ -311,7 +328,7 @@ To avoid this, you could:
 
   
 - **Call `FCTween::ClearActiveTweens()`**
-  - This is useful for changing levels, if you know you want all tweens to stop executing
+  - This is useful for changing levels, if you know you want all tweens to stop executing.
 
 
 - **Make the lamda itself safe**
@@ -341,7 +358,7 @@ TweenObj = FCTween::Play()
 ```
 
 - **Make a "safe mode" by modifying the library to add try/catch statements around lambda execution in FCTweenInstance, and enable exceptions in the build options**
-  - I didn't add this option because it's a controversial move in the C++ world, and the moment I started thinking about how to add it, I sensed a great disturbance, as if millions of voices suddenly cried out in disgust. And, honestly, the other options seem like a better way to handle it.
+  - I didn't add this option because it's a controversial move in the C++ world; and the moment I started thinking about how to add it, I sensed a great disturbance, as if millions of voices suddenly cried out in disgust. And, honestly, the other options seem like a better way to handle it.
 
 ## Tween Pointers
 
@@ -386,17 +403,19 @@ public:
 	}
 };
 ```
-- If you keep a reference to the tween instance, do not mark it as UPROPERTY(), since it's not a UObject
-  - When using the recompile button (live coding), be aware that making changes to a header with a non-uproperty field can bork your memory and cause an editor crash sometimes (usually in BeginDestroy), even if you're managing it properly in code. Close the editor and restart from your IDE when you want to be safe. Or make sure to save and commit your current changes to source control first. 
+- If you keep a reference to an FCTweenInstance, do not mark it as UPROPERTY(), since it's not a UObject
+  - When using the recompile button (live coding), be aware that making changes to a header with a non-uproperty field can bork your memory and cause an editor crash sometimes (usually in BeginDestroy), even if you're managing it properly in code. Close the editor and restart from your IDE when you want to be safe. Or make sure to save and commit your current changes to source control first.
+  - If you want to avoid that, use UFCTweenUObject instead, since that IS a UObject, and its header won't be changing
 - Tweens will get recycled when they are finished. If you keep a pointer to it after it's been completed, the tween will just be idle or playing a different set of options/callbacks from who knows where, so you will end up with confusing bugs if you try to operate on it. If you don't want them to get recycled:
   - set NumLoops to -1 (infinite) if you want it to infinitely replay, and you can pause/unpause it
-  - OR if you need to be able to restart a tween later on, after it is finished, call `Tween->SetAutoDestroy(false)` to make sure it doesn't get auto-recycled.
-- If you used one of the above cases, make sure to call Destroy on the tween when you are done with it, so that it gets recycled. Otherwise that memory will never get reclaimed.
+  - OR if you need to be able to restart a tween later on, after it is finished, call `Tween->SetAutoDestroy(false)` to make sure it doesn't get auto-recycled. This is how UFCTweenUObject and the BP tasks make sure their tweens are always valid.
+  - If you used one of the above cases, make sure to call Destroy on the tween when you are done with it, so that it gets recycled. Otherwise that memory will never get reclaimed.
 
 
 ## Manual Memory Management
 
-If you have a case that the recycling system doesn't work for, or need to do something custom, you can manage the memory and the update manually: 
+If you have a case that the recycling system doesn't work for, or need to do something custom, you can manage the memory and the update manually.
+  - The `new` operator is overloaded in UE ([ModuleBoilerplate.h](https://github.com/EpicGames/UnrealEngine/blob/release/Engine/Source/Runtime/Core/Public/Modules/Boilerplate/ModuleBoilerplate.h)) to use FMemory calls (which uses the mimalloc library on Windows), so it's safe to use new/delete in this way in the UE ecosystem.
 ```c++
 #pragma once
 
@@ -421,7 +440,7 @@ public:
 		Super::BeginPlay();
 
 		ManualTween = new FCTweenInstanceVector();
-		ManualTween->Initialize(
+		ManualTween->Initialize( 
 			FVector::ZeroVector, FVector::OneVector, [&](FVector t) { SetActorLocation(t); }, .5f, EFCEase::OutQuad);
 		ManualTween->SetYoyo(true)
 		    ->SetLoops(-1);
