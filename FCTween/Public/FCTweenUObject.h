@@ -12,12 +12,12 @@ class UFCTweenUObject : public UObject
 	GENERATED_BODY()
 
 public:
-	FCTweenInstance* TweenInstance;
+	FCTweenInstance* Tween;
 
 	UFCTweenUObject();
 	virtual void BeginDestroy() override;
 
-	void SetTweenInstance(FCTweenInstance* InTweenInstance);
+	void SetTweenInstance(FCTweenInstance* InTween);
 	/**
 	 * @brief Stop the tween immediately and mark this object for destruction
 	 */

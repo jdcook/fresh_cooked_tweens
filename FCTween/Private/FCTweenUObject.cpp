@@ -2,28 +2,28 @@
 
 UFCTweenUObject::UFCTweenUObject()
 {
-	TweenInstance = nullptr;
+	Tween = nullptr;
 }
 void UFCTweenUObject::BeginDestroy()
 {
-	if (TweenInstance != nullptr)
+	if (Tween != nullptr)
 	{
-		TweenInstance->Destroy();
-		TweenInstance = nullptr;
+		Tween->Destroy();
+		Tween = nullptr;
 	}
 	UObject::BeginDestroy();
 }
 
-void UFCTweenUObject::SetTweenInstance(FCTweenInstance* InTweenInstance)
+void UFCTweenUObject::SetTweenInstance(FCTweenInstance* InTween)
 {
-	this->TweenInstance = InTweenInstance;
+	this->Tween = InTween;
 	// destroy when we are destroyed
-	this->TweenInstance->SetAutoDestroy(false);
+	this->Tween->SetAutoDestroy(false);
 }
 
 void UFCTweenUObject::Destroy()
 {
-	this->TweenInstance->Destroy();
-	this->TweenInstance = nullptr;
+	this->Tween->Destroy();
+	this->Tween = nullptr;
 	ConditionalBeginDestroy();
 }
