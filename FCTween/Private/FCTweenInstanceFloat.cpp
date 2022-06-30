@@ -7,7 +7,7 @@ void FCTweenInstanceFloat::Initialize(
 	this->StartValue = InStart;
 	this->EndValue = InEnd;
 	this->OnUpdate = MoveTemp(InOnUpdate);
-	this->FCTweenInstance::Initialize(InDurationSecs, InEaseType);
+	this->InitializeSharedMembers(InDurationSecs, InEaseType);
 }
 
 void FCTweenInstanceFloat::ApplyEasing(float EasedPercent)

@@ -116,7 +116,7 @@ public:
 	/**
 	 * @brief Reset variables and start a fresh tween
 	 */
-	void Initialize(float InDurationSecs, EFCEase InEaseType);
+	void InitializeSharedMembers(float InDurationSecs, EFCEase InEaseType);
 	/**
 	 * @brief called on the first frame this tween is updated, to set up any options that have been defined
 	 */

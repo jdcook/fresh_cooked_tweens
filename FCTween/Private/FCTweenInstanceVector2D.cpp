@@ -7,7 +7,7 @@ void FCTweenInstanceVector2D::Initialize(
 	this->StartValue = InStart;
 	this->EndValue = InEnd;
 	this->OnUpdate = MoveTemp(InOnUpdate);
-	this->FCTweenInstance::Initialize(InDurationSecs, InEaseType);
+	this->InitializeSharedMembers(InDurationSecs, InEaseType);
 }
 
 void FCTweenInstanceVector2D::ApplyEasing(float EasedPercent)

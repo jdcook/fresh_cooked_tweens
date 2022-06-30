@@ -86,7 +86,7 @@ FCTweenInstance* FCTweenInstance::SetOnComplete(TFunction<void()> Handler)
 	return this;
 }
 
-void FCTweenInstance::Initialize(float InDurationSecs, EFCEase InEaseType)
+void FCTweenInstance::InitializeSharedMembers(float InDurationSecs, EFCEase InEaseType)
 {
 	checkf(InDurationSecs > 0, TEXT("Tween received duration <= 0"));
 	if (InDurationSecs <= 0)
@@ -144,6 +144,7 @@ void FCTweenInstance::Restart()
 		Counter = 0;
 		bIsPlayingYoyo = false;
 		NumLoopsCompleted = 0;
+		Unpause();
 		Start();
 	}
 }
