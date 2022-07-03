@@ -106,7 +106,7 @@ Linear
 ![](readme_imgs/linear_demo.gif)
 
 Sine
-- Quad is generally preferred, since this one uses a Sine operation and is more expensive. But it's more gradual than Quad is, so it can be useful in places.
+- Quad is usually preferred, since this one uses a Sine operation and is more expensive. But it's more gradual than Quad is, so it can be useful in places where you need the smoothest ease possible.
 
 ![](readme_imgs/sine_demo.gif)
 
