@@ -1,5 +1,5 @@
 ﻿# Fresh Cooked Tweens
-A tweening library by Jared Cook
+A tweening library for Unreal Engine, by [Jared Cook](https://fresh-cooked-games.itch.io/christmas-with-penguins)
 
 ### C++:
 
