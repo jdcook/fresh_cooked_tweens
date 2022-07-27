@@ -225,7 +225,7 @@ If you need to do something with the created tween later on, such as stopping it
 
 ## Custom Curve
 
-Use one of the versions under "Tweens/Custom Curve" to provide a UE curve as the easing function.
+Use one of the versions under "Tweens/Custom Curve" to provide a UE curve as the easing function. These work best with a curve that goes from t=0 to t=1, and then adjust the duration in the tween, for design flexibility.
 
 ![](readme_imgs/customcurve1.png)
 
