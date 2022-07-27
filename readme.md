@@ -188,6 +188,12 @@ OutBack
 
 ![](readme_img/pluginsdir.png)
 
+- Open the project
+- Click "Yes" when it asks if you wouldl ike to rebuild FCTween
+- Go to Edit/Plugins, search for FCTween and enable it
+- Restart the project
+- Verify everything is working by going to a blueprint, right clicking and looking for the "Tween" category
+
 </details>
 
 # Blueprints
