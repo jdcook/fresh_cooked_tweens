@@ -186,7 +186,7 @@ OutBack
 - Copy the whole FCTween directory into your project's Plugins folder:
     - If there is no Plugins folder, create one in the same directory as your .uproject file
 
-![](readme_imgs/pluginsdir.png)
+![](readme_imgs/plugindir.png)
 
 - Open the project
 - Click "Yes" when it asks if you wouldl ike to rebuild FCTween
