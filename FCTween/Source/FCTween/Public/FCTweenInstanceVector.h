@@ -1,4 +1,5 @@
-﻿#pragma once
+﻿// MIT License - Copyright (c) 2022 Jared Cook
+#pragma once
 
 #include "FCTweenInstance.h"
 class FCTWEEN_API FCTweenInstanceVector : public FCTweenInstance

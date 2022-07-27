@@ -1,4 +1,4 @@
-﻿# Fresh Cooked Tweens
+# Fresh Cooked Tweens
 A tweening library for Unreal Engine, by [Jared Cook](https://twitter.com/FreshCookedDev)
 
 ### C++:
@@ -179,6 +179,28 @@ OutBack
 
 </details>
 
+# Plugin Setup
+<details>
+<summary>Expand</summary>
+
+- Copy the FCTween directory into your project's Plugins folder
+    - If there is no Plugins folder, create one in the same directory as your .uproject file
+
+![](readme_imgs/plugindir.png)
+
+- Open the project
+- Click "Yes" when it asks if you would like to rebuild FCTween
+- Go to Edit/Plugins, search for FCTween and enable it
+- Restart the project
+- Verify everything is working by going to a blueprint, right clicking and looking for the "Tween" category
+- Package the project if you want to double-check it's installed correctly
+    - If you package the project, launch the .exe and it says **Plugin 'FCTween' Failed to load because module 'FCTween' could not be found**, this probably means that you have a blueprint-only project. This is a current bug with UE, and the workaround is to make a dummy C++ file, and restart the project to recompile it.
+        - In UE5: Tools/New C++ Class
+        - In UE4: File/New C++ Class
+    - It could also mean you just need to force it to recompile by deleting the project and plugin's Intermediate/Build folders and restart.
+
+</details>
+
 # Blueprints
 <details>
 <summary>Expand</summary>
@@ -208,9 +230,11 @@ If you need to do something with the created tween later on, such as stopping it
 
 ## Custom Curve
 
-Use one of the versions under "Tweens/Custom Curve" to provide a UE curve as the easing function.
+Use one of the versions under "Tweens/Custom Curve" to provide a UE curve as the easing function. These work best with a curve that goes from t=0 to t=1, and then adjust the duration in the tween, for design flexibility.
 
-![](readme_imgs/custom_curve_bp.png)
+![](readme_imgs/customcurve1.png)
+
+![](readme_imgs/customcurve2.png)
 
 ## Ease
 
@@ -232,9 +256,23 @@ Same as ease, but you can override the baked in parameters for Elastic, Bounce, 
 <summary>Expand</summary>
 
 ## Module Setup
-- Copy the FCTween directory into your Source folder.
+
+If you would like to set up FCTween as a code module, instead of a plugin (for easily making code changes to FCTween), expand the section below:
+
+<details>
+<summary>Expand</summary>
+
+- Copy just the folder under FCTween/Source/ into your Source folder.
 
 ![](readme_imgs/srcdir.png)
+
+- Make sure you just grabbed the deepest FCTween folder, because you don't need the plugin files when dealing with a module. Your FCTween folder you copied should look like this:
+
+![](readme_imgs/srcdir2.png)
+
+- Close your IDE, right click on your project's .uproject file, and click "Generate Visual Studio project files" to add it to the solution
+
+![](readme_imgs/generatefiles.png)
 
 - Add FCTween to the module names in your main module's Build.cs:
 ```c#
@@ -256,6 +294,7 @@ PublicDependencyModuleNames.AddRange(new[] {"Core", "CoreUObject", "PhysicsCore"
     }
 ],
 ```
+</details>
 
 ## Basic Usage
 

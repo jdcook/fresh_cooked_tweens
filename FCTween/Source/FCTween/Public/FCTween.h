@@ -1,4 +1,6 @@
-﻿#pragma once
+﻿// MIT License - Copyright (c) 2022 Jared Cook
+
+#pragma once
 #include "FCEasing.h"
 #include "FCTweenInstance.h"
 #include "FCTweenInstanceFloat.h"

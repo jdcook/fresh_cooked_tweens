@@ -1,26 +1,27 @@
-﻿#pragma once
+﻿// MIT License - Copyright (c) 2022 Jared Cook
+#pragma once
 #include "FCTweenBPAction.h"
 #include "FCTweenInstance.h"
 #include "Kismet/BlueprintAsyncActionBase.h"
 
-#include "FCTweenBPActionVector2D.generated.h"
+#include "FCTweenBPActionRotator.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTweenUpdateVector2DOutputPin, FVector2D, Value);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTweenUpdateRotatorOutputPin, FRotator, Value);
 
 UCLASS()
-class FCTWEEN_API UFCTweenBPActionVector2D : public UFCTweenBPAction
+class FCTWEEN_API UFCTweenBPActionRotator : public UFCTweenBPAction
 {
 	GENERATED_BODY()
 public:
-	FVector2D Start;
-	FVector2D End;
+	FQuat Start;
+	FQuat End;
 
 	// Triggered every tween update. use "Value" to get the tweened float for this frame
 	UPROPERTY(BlueprintAssignable)
-	FTweenUpdateVector2DOutputPin ApplyEasing;
+	FTweenUpdateRotatorOutputPin ApplyEasing;
 
 	/**
-	 * @brief Tween a Vector parameter between the given values
+	 * @brief Under the hood this just tweens a quaternion, but for convenience the input/output are converted to Rotators
 	 * @param Start The starting value
 	 * @param End The ending value
 	 * @param DurationSecs The seconds to go from start to end
@@ -35,7 +36,7 @@ public:
 	 * @param bCanTickDuringPause Whether to play this tween while the game is paused. Useful for UI purposes, such as a pause menu
 	 */
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", AdvancedDisplay = "4"), Category = "Tween")
-	static UFCTweenBPActionVector2D* TweenVector2D(FVector2D Start = FVector2D::ZeroVector, FVector2D End = FVector2D::ZeroVector,
+	static UFCTweenBPActionRotator* TweenRotator(FRotator Start = FRotator::ZeroRotator, FRotator End = FRotator::ZeroRotator,
 		float DurationSecs = 1.0f, EFCEase EaseType = EFCEase::InOutQuad, float EaseParam1 = 0, float EaseParam2 = 0,
 		float Delay = 0, int Loops = 0, float LoopDelay = 0, bool bYoyo = false, float YoyoDelay = 0,
 		bool bCanTickDuringPause = false, bool bUseGlobalTimeDilation = true);
@@ -52,11 +53,9 @@ public:
 	 * @param YoyoDelay Seconds to pause before starting to yoyo
 	 * @param bCanTickDuringPause Whether to play this tween while the game is paused. Useful for UI purposes, such as a pause menu
 	 */
-	UFUNCTION(BlueprintCallable,
-		meta = (BlueprintInternalUseOnly = "true", AdvancedDisplay = "4", DisplayName = "Tween Vector 2D Custom Curve"),
-		Category = "Tween|Custom Curve")
-	static UFCTweenBPActionVector2D* TweenVector2DCustomCurve(FVector2D Start = FVector2D::ZeroVector,
-		FVector2D End = FVector2D::ZeroVector, float DurationSecs = 1.0f, UCurveFloat* Curve = nullptr, float Delay = 0,
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", AdvancedDisplay = "4"), Category = "Tween|Custom Curve")
+	static UFCTweenBPActionRotator* TweenRotatorCustomCurve(FRotator Start = FRotator::ZeroRotator,
+		FRotator End = FRotator::ZeroRotator, float DurationSecs = 1.0f, UCurveFloat* Curve = nullptr, float Delay = 0,
 		int Loops = 0, float LoopDelay = 0, bool bYoyo = false, float YoyoDelay = 0, bool bCanTickDuringPause = false,
 		bool bUseGlobalTimeDilation = true);
 

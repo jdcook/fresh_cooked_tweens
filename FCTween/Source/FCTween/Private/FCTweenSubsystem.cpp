@@ -7,6 +7,14 @@ void UFCTweenSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
 	LastTickedFrame = GFrameCounter;
+
+#if ENGINE_MAJOR_VERSION < 5
+	if(GetWorld() != nullptr)
+	{
+		LastRealTimeSeconds = GetWorld()->RealTimeSeconds;
+	}
+#endif
+	
 #if WITH_EDITOR
 	FCTween::ClearActiveTweens();
 #endif
@@ -28,7 +36,13 @@ void UFCTweenSubsystem::Tick(float DeltaTime)
 
 		if (GetWorld() != nullptr)
 		{
+#if ENGINE_MAJOR_VERSION < 5
+			float DeltaRealTimeSeconds = GetWorld()->RealTimeSeconds - LastRealTimeSeconds;
+			FCTween::Update(DeltaRealTimeSeconds, GetWorld()->DeltaTimeSeconds, GetWorld()->IsPaused());
+			LastRealTimeSeconds = GetWorld()->RealTimeSeconds;
+#else
 			FCTween::Update(GetWorld()->DeltaRealTimeSeconds, GetWorld()->DeltaTimeSeconds, GetWorld()->IsPaused());
+#endif
 		}
 	}
 }

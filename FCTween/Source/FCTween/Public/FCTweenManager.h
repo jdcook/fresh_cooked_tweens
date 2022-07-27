@@ -1,4 +1,5 @@
-﻿#pragma once
+﻿// MIT License - Copyright (c) 2022 Jared Cook
+#pragma once
 
 template <class T>
 class FCTWEEN_API FCTweenManager
