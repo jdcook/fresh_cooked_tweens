@@ -179,6 +179,17 @@ OutBack
 
 </details>
 
+# Plugin Setup
+<details>
+<summary>Expand</summary>
+
+- Copy the whole FCTween directory into your project's Plugins folder:
+    - If there is no Plugins folder, create one in the same directory as your .uproject file
+
+![](readme_img/pluginsdir.png)
+
+</details>
+
 # Blueprints
 <details>
 <summary>Expand</summary>
@@ -232,9 +243,23 @@ Same as ease, but you can override the baked in parameters for Elastic, Bounce, 
 <summary>Expand</summary>
 
 ## Module Setup
-- Copy the FCTween directory into your Source folder.
+
+If you would like to set up FCTween as a code module, instead of a plugin (for easily making code changes to FCTween), expand the section below:
+
+<details>
+<summary>Expand</summary>
+
+- Copy just the folder under FCTween/Source/ into your Source folder.
 
 ![](readme_imgs/srcdir.png)
+
+- Make sure you just grabbed the deepest FCTween folder, because you don't need the plugin files when dealing with a module. Your FCTween folder you copied should look like this:
+
+![](readme_imgs/srcdir2.png)
+
+- Close your IDE, right click on your project's .uproject file, and click "Generate Visual Studio project files" to add it to the solution
+
+![](readme_imgs/generatefiles.png)
 
 - Add FCTween to the module names in your main module's Build.cs:
 ```c#
@@ -256,6 +281,7 @@ PublicDependencyModuleNames.AddRange(new[] {"Core", "CoreUObject", "PhysicsCore"
     }
 ],
 ```
+</details>
 
 ## Basic Usage
 
