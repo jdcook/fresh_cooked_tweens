@@ -183,13 +183,13 @@ OutBack
 <details>
 <summary>Expand</summary>
 
-- Copy the whole FCTween directory into your project's Plugins folder:
+- Copy the whole FCTween directory into your project's Plugins folder
     - If there is no Plugins folder, create one in the same directory as your .uproject file
 
 ![](readme_imgs/plugindir.png)
 
 - Open the project
-- Click "Yes" when it asks if you wouldl ike to rebuild FCTween
+- Click "Yes" when it asks if you would like to rebuild FCTween
 - Go to Edit/Plugins, search for FCTween and enable it
 - Restart the project
 - Verify everything is working by going to a blueprint, right clicking and looking for the "Tween" category
@@ -227,7 +227,9 @@ If you need to do something with the created tween later on, such as stopping it
 
 Use one of the versions under "Tweens/Custom Curve" to provide a UE curve as the easing function.
 
-![](readme_imgs/custom_curve_bp.png)
+![](readme_imgs/customcurve1.png)
+
+![](readme_imgs/customcurve2.png)
 
 ## Ease
 
