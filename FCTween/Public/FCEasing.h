@@ -1,4 +1,5 @@
-﻿#pragma once
+﻿// MIT License - Copyright (c) 2022 Jared Cook
+
 /*
  * Easing Library
  *
@@ -12,6 +13,7 @@
  *
  *
  * LICENSES
+ *
  *
  * Original tween equations from Robert Penner:
  *	MIT License
@@ -43,6 +45,8 @@
  * 	Note: Please keep the URL so people can refer back to how these were derived.
  *
  */
+
+#pragma once
 
 UENUM(BlueprintType)
 enum class EFCEase : uint8
