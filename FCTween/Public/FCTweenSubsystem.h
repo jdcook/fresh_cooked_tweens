@@ -10,6 +10,8 @@ class FCTWEEN_API UFCTweenSubsystem : public UGameInstanceSubsystem, public FTic
 private:
 	UPROPERTY()
 	uint64 LastTickedFrame;
+	UPROPERTY()
+	float LastRealTimeSeconds;
 
 public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;

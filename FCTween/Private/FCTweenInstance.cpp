@@ -119,9 +119,15 @@ void FCTweenInstance::InitializeSharedMembers(float InDurationSecs, EFCEase InEa
 
 	DelayState = EDelayState::None;
 
+#if ENGINE_MAJOR_VERSION < 5
+	OnYoyo = nullptr;
+	OnLoop = nullptr;
+	OnComplete = nullptr;
+#else
 	OnYoyo.Reset();
 	OnLoop.Reset();
 	OnComplete.Reset();
+#endif
 }
 
 void FCTweenInstance::Start()
@@ -153,9 +159,16 @@ void FCTweenInstance::Destroy()
 {
 	// mark for recycling
 	bIsActive = false;
+
+#if ENGINE_MAJOR_VERSION < 5
+	OnLoop  = nullptr;
+	OnYoyo  = nullptr;
+	OnComplete = nullptr;
+#else
 	OnLoop.Reset();
 	OnYoyo.Reset();
 	OnComplete.Reset();
+#endif
 }
 
 UFCTweenUObject* FCTweenInstance::CreateUObject(UObject* Outer)
