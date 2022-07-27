@@ -194,7 +194,7 @@ OutBack
 - Restart the project
 - Verify everything is working by going to a blueprint, right clicking and looking for the "Tween" category
 - Package the project if you want to double-check it's installed correctly
-    - If you package the project, launch the .exe and it says **Plugin 'FCTweenFailed to load because module 'FCTween' could not be found**, this probably means that you have a blueprint-only project. This is a current bug with UE, and the workaround is to make a dummy C++ file, and restart the project to recompile it.
+    - If you package the project, launch the .exe and it says **Plugin 'FCTween' Failed to load because module 'FCTween' could not be found**, this probably means that you have a blueprint-only project. This is a current bug with UE, and the workaround is to make a dummy C++ file, and restart the project to recompile it.
         - In UE5: Tools/New C++ Class
         - In UE4: File/New C++ Class
     - It could also mean you just need to force it to recompile by deleting the project and plugin's Intermediate/Build folders and restart.
