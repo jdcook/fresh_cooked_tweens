@@ -67,6 +67,33 @@ What FCTween does provide is a more convenient, design-oriented way to define a 
 
 </details>
 
+# Plugin Setup
+<details>
+<summary>Expand</summary>
+
+- Copy the FCTween directory into your project's Plugins folder
+    - If there is no Plugins folder, create one in the same directory as your .uproject file
+
+![](readme_imgs/plugindir.png)
+
+- If you want to use the C++ API, add FCTween to the module names in your main module's Build.cs:
+```c#
+PublicDependencyModuleNames.AddRange(new[] {"FCTween"});
+```
+
+- Open the project
+- Click "Yes" when it asks if you would like to rebuild FCTween
+- Go to Edit/Plugins, search for FCTween and make sure it's enabled
+- Restart the project if needed
+- Verify everything is working by going to a blueprint, right clicking and looking for the "Tween" category
+- Package the project if you want to double-check it's installed correctly
+    - If you package the project and launch the .exe, and it says **Plugin 'FCTween' Failed to load because module 'FCTween' could not be found**, this probably means that you have a blueprint-only project. This is a current bug with UE, and the workaround is to make a dummy C++ file, and restart the project to recompile it.
+        - In UE5: Tools/New C++ Class
+        - In UE4: File/New C++ Class
+    - It could also mean you just need to force it to recompile by deleting the project and plugin's Intermediate/Build folders and restart.
+
+</details>
+
 # Easing Functions
 <details>
 <summary>Expand</summary>
@@ -181,27 +208,6 @@ OutBack
 
 </details>
 
-# Plugin Setup
-<details>
-<summary>Expand</summary>
-
-- Copy the FCTween directory into your project's Plugins folder
-    - If there is no Plugins folder, create one in the same directory as your .uproject file
-
-![](readme_imgs/plugindir.png)
-
-- Open the project
-- Click "Yes" when it asks if you would like to rebuild FCTween
-- Go to Edit/Plugins, search for FCTween and make sure it's enabled
-- Restart the project if needed
-- Verify everything is working by going to a blueprint, right clicking and looking for the "Tween" category
-- Package the project if you want to double-check it's installed correctly
-    - If you package the project and launch the .exe, and it says **Plugin 'FCTween' Failed to load because module 'FCTween' could not be found**, this probably means that you have a blueprint-only project. This is a current bug with UE, and the workaround is to make a dummy C++ file, and restart the project to recompile it.
-        - In UE5: Tools/New C++ Class
-        - In UE4: File/New C++ Class
-    - It could also mean you just need to force it to recompile by deleting the project and plugin's Intermediate/Build folders and restart.
-
-</details>
 
 # Blueprints
 <details>
@@ -278,7 +284,7 @@ If you would like to set up FCTween as a code module, instead of a plugin (for e
 
 - Add FCTween to the module names in your main module's Build.cs:
 ```c#
-PublicDependencyModuleNames.AddRange(new[] {"Core", "CoreUObject", "PhysicsCore", "Engine", "InputCore", "FCTween"});
+PublicDependencyModuleNames.AddRange(new[] {"FCTween"});
 ```
 
 - Add FCTween to your Modules list in your .uproject file
