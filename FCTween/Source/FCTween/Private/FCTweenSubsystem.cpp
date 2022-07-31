@@ -24,6 +24,7 @@ void UFCTweenSubsystem::Deinitialize()
 {
 	Super::Deinitialize();
 #if WITH_EDITOR
+	FCTween::CheckTweenCapacity();
 	FCTween::ClearActiveTweens();
 #endif
 }

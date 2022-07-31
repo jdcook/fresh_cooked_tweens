@@ -17,6 +17,11 @@ private:
 	static FCTweenManager<FCTweenInstanceVector2D>* Vector2DTweenManager;
 	static FCTweenManager<FCTweenInstanceQuat>* QuatTweenManager;
 
+	static int NumReservedFloat;
+	static int NumReservedVector;
+	static int NumReservedVector2D;
+	static int NumReservedQuat;
+
 public:
 	static void Initialize();
 	static void Deinitialize();
@@ -33,6 +38,11 @@ public:
 	static void EnsureCapacity(int NumTweens);
 	static void Update(float UnscaledDeltaSeconds, float DilatedDeltaSeconds, bool bIsGamePaused);
 	static void ClearActiveTweens();
+
+	/**
+	 * @brief compare the current reserved memory for tweens against the initial capacity, to tell the developer if initial capacity needs to be increased
+	 */
+	static void CheckTweenCapacity();
 
 	/**
 	 * @brief Convenience function for UFCEasing::Ease()
