@@ -45,10 +45,10 @@ void FCTween::EnsureCapacity(int NumFloatTweens, int NumVectorTweens, int NumVec
 	Vector2DTweenManager->EnsureCapacity(NumVector2DTweens);
 	QuatTweenManager->EnsureCapacity(NumQuatTweens);
 	
-	NumReservedFloat = NumFloatTweens;
-	NumReservedVector = NumVectorTweens;
-	NumReservedVector2D = NumVector2DTweens;
-	NumReservedQuat = NumQuatTweens;
+	NumReservedFloat = FloatTweenManager->GetCurrentCapacity();
+	NumReservedVector = VectorTweenManager->GetCurrentCapacity();
+	NumReservedVector2D = Vector2DTweenManager->GetCurrentCapacity();
+	NumReservedQuat = QuatTweenManager->GetCurrentCapacity();
 }
 
 void FCTween::EnsureCapacity(int NumTweens)
@@ -72,7 +72,7 @@ void FCTween::ClearActiveTweens()
 	QuatTweenManager->ClearActiveTweens();
 }
 
-void FCTween::CheckTweenCapacity()
+int FCTween::CheckTweenCapacity()
 {
 	if(FloatTweenManager->GetCurrentCapacity() > NumReservedFloat)
 	{
@@ -94,6 +94,8 @@ void FCTween::CheckTweenCapacity()
 		UE_LOG(LogTemp, Warning, TEXT("FCTWeen: Consider increasing initial capacity for quaternion tweens. %d were initially reserved, but now there are %d in memory."),
 			NumReservedQuat, QuatTweenManager->GetCurrentCapacity());
 	}
+
+	return FloatTweenManager->GetCurrentCapacity() + VectorTweenManager->GetCurrentCapacity() +  Vector2DTweenManager->GetCurrentCapacity() + QuatTweenManager->GetCurrentCapacity();
 }
 
 float FCTween::Ease(float t, EFCEase EaseType)

@@ -42,7 +42,7 @@ public:
 	/**
 	 * @brief compare the current reserved memory for tweens against the initial capacity, to tell the developer if initial capacity needs to be increased
 	 */
-	static void CheckTweenCapacity();
+	static int CheckTweenCapacity();
 
 	/**
 	 * @brief Convenience function for UFCEasing::Ease()
