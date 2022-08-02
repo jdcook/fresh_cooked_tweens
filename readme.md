@@ -1,5 +1,9 @@
 ﻿# Fresh Cooked Tweens
+
+![](FCTween/Resources/icon128.png) 
+
 A tweening library for Unreal Engine, by [Jared Cook](https://twitter.com/FreshCookedDev)
+
 
 UE4 and UE5 supported
 
