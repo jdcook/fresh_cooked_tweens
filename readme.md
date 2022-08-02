@@ -537,29 +537,29 @@ Here is the stress testing project, if you want to run it yourself: https://gith
 
 ### 20,000 tweens on startup, +1 per frame
 
-|          | Initialize Milliseconds | Frames Per Second | Freeze on tween complete | Memory |
-|----------|-------------------------|-------------------|--------------------------|--------|
-| FCTween  | 1.39 ms                 | 60 fps            | 0                        | ~9MB   |
-| BUITween | 10.06 ms                | 55 to 60 fps      | 0                        | ~10 MB |
-| iTween   | 282 ms                  | 11 to 46 fps      | 2 seconds                | ~41MB  |
+|          | Initialize Milliseconds | Frames Per Second | Freeze after startup tweens complete | Memory |
+|----------|-------------------------|-------------------|--------------------------------------|--------|
+| FCTween  | 1.39 ms                 | 60 fps            | 0                                    | ~9MB   |
+| BUITween | 10.06 ms                | 55 to 60 fps      | 0                                    | ~10 MB |
+| iTween   | 282 ms                  | 11 to 46 fps      | 2 seconds                            | ~41MB  |
 
 
 ### 40,000 tweens on startup, +40 per frame
 
-|          | Initialize Milliseconds | Frames Per Second | Freeze on tween complete | Memory |
-|----------|-------------------------|-------------------|--------------------------|--------|
-| FCTween  | 2.4 ms                  | 60 to 60 fps      | 0                        | ~21MB  |
-| BUITween | 25.58 ms                | 40 to 60 fps      | 7 seconds                | ~34 MB |
-| iTween   | 578 ms                  | 6 to 24 fps       | 8 seconds                | ~88MB  | 
+|          | Initialize Milliseconds | Frames Per Second | Freeze after startup tweens complete | Memory |
+|----------|-------------------------|-------------------|--------------------------------------|--------|
+| FCTween  | 2.4 ms                  | 60 to 60 fps      | 0                                    | ~21MB  |
+| BUITween | 25.58 ms                | 40 to 60 fps      | 7 seconds                            | ~34 MB |
+| iTween   | 578 ms                  | 6 to 24 fps       | 8 seconds                            | ~88MB  | 
 
 
 ### 80,000 tweens on startup, +80 per frame
 
-|          | Initialize Milliseconds | Frames Per Second | Freeze on tween complete | Memory |
-|----------|-------------------------|-------------------|--------------------------|--------|
-| FCTween  | 4.23 ms                 | 60 fps            | 0                        | ~44MB  |
-| BUITween | 50.05 ms                | 27 to 60 fps      | 22 seconds               | ~50MB  |
-| iTween   | 1207 ms                 | 3 to 12 fps       | 23 seconds               | ~175MB |
+|          | Initialize Milliseconds | Frames Per Second | Freeze after startup tweens complete | Memory |
+|----------|-------------------------|-------------------|--------------------------------------|--------|
+| FCTween  | 4.23 ms                 | 60 fps            | 0                                    | ~44MB  |
+| BUITween | 50.05 ms                | 27 to 60 fps      | 22 seconds                           | ~50MB  |
+| iTween   | 1207 ms                 | 3 to 12 fps       | 23 seconds                           | ~175MB |
 
 <details>
 <summary>Notes on performance (Expand)</summary>
