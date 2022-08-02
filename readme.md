@@ -515,6 +515,72 @@ public:
 
 </details>
 
+# Performance
+<details>
+<summary>Expand</summary>
+
+- FCTween uses a LinkedList to keep track of tweens, for fast adding/removal
+- Recycles old tweens to avoid unnecessary memory allocations
+- Lets you EnsureCapacity() to preallocate your memory during game load
+    - also comes with console warnings when you stop PIE to let you know when you could increase your initial capacity for performance
+- Small memory footprint, using basic C++ classes outside of the UObject ecosystem
+
+## Stress Tests
+
+Here is the stress testing project, if you want to run it yourself: https://github.com/jdcook/ue_tween_library_stress_test
+
+(see notes on memory measurements below)
+
+### 20,000 tweens on startup, +1 per frame
+
+|          | Initialize Milliseconds | Frames Per Second | Freeze on tween complete | Memory |
+|----------|-------------------------|-------------------|--------------------------|--------|
+| FCTween  | 1.39 ms                 | 60 fps            | 0                        | ~9MB   |
+| BUITween | 10.06 ms                | 55 to 60 fps      | 0                        | ~10 MB |
+| iTween   | 282 ms                  | 11 to 46 fps      | 2 seconds                | ~41MB  |
+
+
+### 40,000 tweens on startup, +40 per frame
+
+|          | Initialize Milliseconds | Frames Per Second | Freeze on tween complete | Memory |
+|----------|-------------------------|-------------------|------------------------|--------|
+| FCTween  | 2.4 ms                  | 60 to 60 fps      | 0                      | ~21MB  |
+| BUITween | 25.58 ms                | 40 to 60 fps      | 7 seconds              | ~34 MB |
+| iTween   | 578 ms                  | 6 to 24 fps       | 8 seconds              | ~88MB  | 
+
+
+### 80,000 tweens on startup, +80 per frame
+
+|          | Initialize Milliseconds | Frames Per Second | Freeze on tween complete | Memory |
+|----------|-------------------------|----------------|--------------------------|--------|
+| FCTween  | 4.23 ms                 | 60 fps         | 0                        | ~44MB  |
+| BUITween | 50.05 ms                | 27 to 60 fps   | 22 seconds               | ~50MB  |
+| iTween   | 1207 ms                 | 3 to 12 fps    | 23 seconds               | ~175MB |
+
+<details>
+<summary>Notes on performance (Expand)</summary>
+
+- Test details: create X tweens on initialize, and Y tweens per frame. The FPS varies over the course of the test because of the tweens per frame, so take the lowest and highest FPS.
+- Memory is not at all precise - I used the LLM and gauged how much the relevant categories changed when the tweens were initialized. So it's only meant to give you a rough idea of how much memory each one uses in comparison to the others.
+- This test assumes that you used EnsureCapacity() on game startup to pre-allocate all memory for FCTween, eliminating the time to allocate memory for new tweens
+- BUITween is very close on memory, but FCTween is a little bit slimmer because BUI keeps track of all possible UI properties in each instance
+- BUITween's update is really about the same speed as FCTween, the only thing binging it down is the cost of creating/destroying tweens; it uses an array to keep track of them and doesn't recycle, incurring a bit more cost
+- I appreciate the engineers on the other tweening projects and do not wish to insult them, I learn lots of things from open source code and appreciate how they both put their code out in the wild!
+</details>
+
+</details>
+
+# Platforms
+
+<details>
+<summary>Expand</summary>
+
+I've only tested packaging for Windows, so if you are shipping on Linux, Mac, Android, iOS, or a console, be sure to test it early.
+
+Having worked on Android, Mac, and Nintendo Switch games before, my sense is that the library is not going to have porting issues - but also, every project seems to break the first time you try it in an environment it hasn't run in yet, and I haven't used those platforms for UE projects either! So test early!
+
+</details>
+
 # References
 <details>
 <summary>Expand</summary>
