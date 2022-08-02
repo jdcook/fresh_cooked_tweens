@@ -2,6 +2,8 @@
 
 #include "FCTweenManager.h"
 
+DEFINE_LOG_CATEGORY(LogFCTween)
+
 const int DEFAULT_FLOAT_TWEEN_CAPACITY = 50;
 const int DEFAULT_VECTOR_TWEEN_CAPACITY = 50;
 const int DEFAULT_VECTOR2D_TWEEN_CAPACITY = 50;
@@ -76,22 +78,22 @@ int FCTween::CheckTweenCapacity()
 {
 	if(FloatTweenManager->GetCurrentCapacity() > NumReservedFloat)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("FCTWeen: Consider increasing initial capacity for float tweens with FCTween::EnsureCapacity(). %d were initially reserved, but now there are %d in memory."),
+		UE_LOG(LogFCTween, Warning, TEXT("FCTWeen: Consider increasing initial capacity for float tweens with FCTween::EnsureCapacity(). %d were initially reserved, but now there are %d in memory."),
 			NumReservedFloat, FloatTweenManager->GetCurrentCapacity());
 	}
 	if(VectorTweenManager->GetCurrentCapacity() > NumReservedVector)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("FCTWeen: Consider increasing initial capacity for vector (3d vector) tweens. %d were initially reserved, but now there are %d in memory."),
+		UE_LOG(LogFCTween, Warning, TEXT("FCTWeen: Consider increasing initial capacity for vector (3d vector) tweens. %d were initially reserved, but now there are %d in memory."),
 			NumReservedVector, VectorTweenManager->GetCurrentCapacity());
 	}
 	if(Vector2DTweenManager->GetCurrentCapacity() > NumReservedVector2D)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("FCTWeen: Consider increasing initial capacity for vector2d tweens. %d were initially reserved, but now there are %d in memory."),
+		UE_LOG(LogFCTween, Warning, TEXT("FCTWeen: Consider increasing initial capacity for vector2d tweens. %d were initially reserved, but now there are %d in memory."),
 			NumReservedVector2D, Vector2DTweenManager->GetCurrentCapacity());
 	}
 	if(QuatTweenManager->GetCurrentCapacity() > NumReservedQuat)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("FCTWeen: Consider increasing initial capacity for quaternion tweens. %d were initially reserved, but now there are %d in memory."),
+		UE_LOG(LogFCTween, Warning, TEXT("FCTWeen: Consider increasing initial capacity for quaternion tweens. %d were initially reserved, but now there are %d in memory."),
 			NumReservedQuat, QuatTweenManager->GetCurrentCapacity());
 	}
 

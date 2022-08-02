@@ -9,6 +9,8 @@
 #include "FCTweenInstanceVector2D.h"
 #include "FCTweenManager.h"
 
+FCTWEEN_API DECLARE_LOG_CATEGORY_EXTERN(LogFCTween, Log, All)
+
 class FCTWEEN_API FCTween
 {
 private:
