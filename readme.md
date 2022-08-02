@@ -529,7 +529,7 @@ public:
 
 Here is the stress testing project, if you want to run it yourself: https://github.com/jdcook/ue_tween_library_stress_test
 
-(see notes on memory measurements below)
+**Memory is the difference shown in the Low Level Memory Tracker once the tweens initialize. I don't believe any of the libraries take up that many Megabytes, that is just what is displayed in the LLM. So it's just to get an idea of how the libraries compare.**
 
 ### 20,000 tweens on startup, +1 per frame
 
@@ -543,25 +543,24 @@ Here is the stress testing project, if you want to run it yourself: https://gith
 ### 40,000 tweens on startup, +40 per frame
 
 |          | Initialize Milliseconds | Frames Per Second | Freeze on tween complete | Memory |
-|----------|-------------------------|-------------------|------------------------|--------|
-| FCTween  | 2.4 ms                  | 60 to 60 fps      | 0                      | ~21MB  |
-| BUITween | 25.58 ms                | 40 to 60 fps      | 7 seconds              | ~34 MB |
-| iTween   | 578 ms                  | 6 to 24 fps       | 8 seconds              | ~88MB  | 
+|----------|-------------------------|-------------------|--------------------------|--------|
+| FCTween  | 2.4 ms                  | 60 to 60 fps      | 0                        | ~21MB  |
+| BUITween | 25.58 ms                | 40 to 60 fps      | 7 seconds                | ~34 MB |
+| iTween   | 578 ms                  | 6 to 24 fps       | 8 seconds                | ~88MB  | 
 
 
 ### 80,000 tweens on startup, +80 per frame
 
 |          | Initialize Milliseconds | Frames Per Second | Freeze on tween complete | Memory |
-|----------|-------------------------|----------------|--------------------------|--------|
-| FCTween  | 4.23 ms                 | 60 fps         | 0                        | ~44MB  |
-| BUITween | 50.05 ms                | 27 to 60 fps   | 22 seconds               | ~50MB  |
-| iTween   | 1207 ms                 | 3 to 12 fps    | 23 seconds               | ~175MB |
+|----------|-------------------------|-------------------|--------------------------|--------|
+| FCTween  | 4.23 ms                 | 60 fps            | 0                        | ~44MB  |
+| BUITween | 50.05 ms                | 27 to 60 fps      | 22 seconds               | ~50MB  |
+| iTween   | 1207 ms                 | 3 to 12 fps       | 23 seconds               | ~175MB |
 
 <details>
 <summary>Notes on performance (Expand)</summary>
 
 - Test details: create X tweens on initialize, and Y tweens per frame. The FPS varies over the course of the test because of the tweens per frame, so take the lowest and highest FPS.
-- Memory is not at all precise - I used the LLM and gauged how much the relevant categories changed when the tweens were initialized. So it's only meant to give you a rough idea of how much memory each one uses in comparison to the others.
 - This test assumes that you used EnsureCapacity() on game startup to pre-allocate all memory for FCTween, eliminating the time to allocate memory for new tweens
 - BUITween is very close on memory, but FCTween is a little bit slimmer because BUI keeps track of all possible UI properties in each instance
 - BUITween's update is really about the same speed as FCTween, the only thing binging it down is the cost of creating/destroying tweens; it uses an array to keep track of them and doesn't recycle, incurring a bit more cost
