@@ -548,7 +548,7 @@ Here is the stress testing project, if you want to run it yourself: https://gith
 
 |          | Initialize Milliseconds | Frames Per Second | Freeze after startup tweens complete | Memory |
 |----------|-------------------------|-------------------|--------------------------------------|--------|
-| FCTween  | 2.4 ms                  | 60 to 60 fps      | 0                                    | ~21MB  |
+| FCTween  | 2.4 ms                  | 60 fps            | 0                                    | ~21MB  |
 | BUITween | 25.58 ms                | 40 to 60 fps      | 7 seconds                            | ~34 MB |
 | iTween   | 578 ms                  | 6 to 24 fps       | 8 seconds                            | ~88MB  | 
 
