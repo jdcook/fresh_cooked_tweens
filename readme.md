@@ -18,7 +18,7 @@ FCTween::Play(
 ```
 
 ### Blueprints:
-![](readme_imgs/basic_usage_bp.png)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/basic_usage_bp.png)
 
 <details>
 <summary>Why Tweens? (Expand)</summary>
@@ -29,7 +29,7 @@ It can be a large efficiency gain to let a programmer or designer quickly set up
 
 In big projects, they are great for those little polish items. Some small projects can find broader use for them:
 
-![](readme_imgs/penguin_demo.gif)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/penguin_demo.gif)
 
 ```c++
 WaddleRotator = GetMesh()->GetRelativeRotation();
@@ -74,7 +74,7 @@ What FCTween does provide is a more convenient, design-oriented way to define a 
 - Copy the FCTween directory into your project's Plugins folder
     - If there is no Plugins folder, create one in the same directory as your .uproject file
 
-![](readme_imgs/plugindir.png)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/plugindir.png)
 
 - If you want to use the C++ API, add FCTween to the module names in your main module's Build.cs:
 ```c#
@@ -117,94 +117,94 @@ Most functions have an In, Out, and InOut version. This indicates which end of t
 
 "In" means the easing happens at the start:
 
-![](readme_imgs/in_cubic_demo.gif)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/in_cubic_demo.gif)
 
 "Out" means the easing happens at the end:
 
-![](readme_imgs/cubic_demo.gif)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/cubic_demo.gif)
 
 "InOut" means the easing happens at start and end:
 
-![](readme_imgs/inout_cubic_demo.gif)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/inout_cubic_demo.gif)
 
 ## Examples 
 
 Linear
 - It's just a lerp
 
-![](readme_imgs/linear_demo.gif)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/linear_demo.gif)
 
 Sine
 - Quad is usually preferred, since this one uses a Sine operation and is more expensive. But it's more gradual than Quad is, so it can be useful in places where you need the smoothest ease possible.
 
-![](readme_imgs/sine_demo.gif)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/sine_demo.gif)
 
 Quadratic
 - The bread and butter - cheap formula (t * t) and looks good
 
-![](readme_imgs/quad_demo.gif)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/quad_demo.gif)
 
 Cubic
 - A more drastic Quadratic (t * t * t)
 
-![](readme_imgs/cubic_demo.gif)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/cubic_demo.gif)
 
 Quartic
 - Even more drastic (t * t * t * t)
 
-![](readme_imgs/quartic_demo.gif)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/quartic_demo.gif)
 
 Quintic
 - Veeeery drastic (t * t * t * t * t)
 
-![](readme_imgs/quintic_demo.gif)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/quintic_demo.gif)
 
 Exponential
 - Like Quintic but even sharper
 
-![](readme_imgs/exponential_demo.gif)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/exponential_demo.gif)
 
 Circular
 - The graph is a quarter circle. Makes it feel like the velocity changed suddenly. The start is faster than Quint but the end is slower than Quad. Use InCirc to be slow and then fast, instead 
 
-![](readme_imgs/circular_demo.gif)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/circular_demo.gif)
 
 Smoothstep
 - Pretty similar to InOutQuad
 
-![](readme_imgs/smoothstep_demo.gif)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/smoothstep_demo.gif)
 
 Stepped
 - It's kind of like the opposite of easing, but here it is anyway
 - Change EaseParam1 to set how many steps to use. It's set to 10 by default
 
-![](readme_imgs/stepped_demo.gif)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/stepped_demo.gif)
 
 Elastic
 - Cartoony "boing" effect. May take parameter tweaking to get it just how you want it in your game. Use EaseParam1 and EaseParam2 to tweak the amplitude and period. Looks good with scale, or menus transitioning on screen.
 - EaseParam1 (Amplitude) is set to 1.0 by default. Raise it to make it wobble farther, lower it to make it smaller. 
 - EaseParam2 (Period) is set to 0.2 by default. Smaller is spazzier (more wave cycles in the same amount of time). Bigger means less cycles.
 
-![](readme_imgs/elastic_scale_demo.gif)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/elastic_scale_demo.gif)
 
-![](readme_imgs/elastic_demo_2.gif)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/elastic_demo_2.gif)
 
 Bounce
 - Bounces back from the target a couple of times
 
-![](readme_imgs/bounce_demo.gif)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/bounce_demo.gif)
 
 InBack
 - Anticipation; pull back a little before going forward
 - EaseParam1 (Overshoot) is set to 1.70158 by default. If you want to know why, here you go: https://github.com/Michaelangel007/easing#the-magic-of-170158
 
-![](readme_imgs/back_demo.gif)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/back_demo.gif)
 
 OutBack
 - (insert low effort Australia joke here)
 - It overshoots the target and then pulls back to meet it. You can tweak the overshoot amount with EaseParam1.
 
-![](readme_imgs/outback_demo.gif)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/outback_demo.gif)
 
 </details>
 
@@ -216,45 +216,45 @@ OutBack
 ## Basic Usage
 Add a BP task from the "Tween" category.
 
-![](readme_imgs/bp_menu.png)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/bp_menu.png)
 
 Give it a start and end value, and hook up the Apply Easing pin to your update logic. The Value pin gives you the current value each frame. Here is an example of how to move an actor up 50 units:
 
-![](readme_imgs/basic_usage_bp.png)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/basic_usage_bp.png)
 
 Which looks like this:
 
-![](readme_imgs/basic_usage_demo.gif)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/basic_usage_demo.gif)
 
 Here is one that does an infinite bobbing animation:
 
-![](readme_imgs/bob_bp.png)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/bob_bp.png)
 
-![](readme_imgs/bob_demo.gif)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/bob_demo.gif)
 
 If you need to do something with the created tween later on, such as stopping it after an interaction, you can use the Async Task pin to operate on the tween.
 
-![](readme_imgs/pause_bp.png)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/pause_bp.png)
 
 ## Custom Curve
 
 Use one of the versions under "Tweens/Custom Curve" to provide a UE curve as the easing function. These work best with a curve that goes from t=0 to t=1, and then adjust the duration in the tween, for design flexibility.
 
-![](readme_imgs/customcurve1.png)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/customcurve1.png)
 
-![](readme_imgs/customcurve2.png)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/customcurve2.png)
 
 ## Ease
 
 Ease a 0-1 float with the given easing function. This is similar to UE's default Ease node, but it has all the FCTween functions available.
 
-![](readme_imgs/ease_bp.png)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/ease_bp.png)
 
 ## Ease with Params
 
 Same as ease, but you can override the baked in parameters for Elastic, Bounce, Back, and Smoothstep. 0 means no override provided. Default values are listed in the comments, if you hover over the param.
 
-![](readme_imgs/ease_params_bp.png)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/ease_params_bp.png)
 
 </details>
 
@@ -272,15 +272,15 @@ If you would like to set up FCTween as a code module, instead of a plugin (for e
 
 - After downloading the code, go into FCTween/Source/, and copy the folder inside there into your Source folder.
 
-![](readme_imgs/srcdir.png)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/srcdir.png)
 
 - Make sure you just grabbed the deepest FCTween folder, because you don't need the plugin files when dealing with a module. Your FCTween folder you copied should look like this:
 
-![](readme_imgs/srcdir2.png)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/srcdir2.png)
 
 - Close your IDE, right click on your project's .uproject file, and click "Generate Visual Studio project files" to add it to the solution
 
-![](readme_imgs/generatefiles.png)
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/generatefiles.png)
 
 - Add FCTween to the module names in your main module's Build.cs:
 ```c#
@@ -563,7 +563,7 @@ Here is the stress testing project, if you want to run it yourself: https://gith
 - Test details: create X tweens on initialize, and Y tweens per frame. The FPS varies over the course of the test because of the tweens per frame, so take the lowest and highest FPS.
 - This test assumes that you used EnsureCapacity() on game startup to pre-allocate all memory for FCTween, eliminating the time to allocate memory for new tweens
 - BUITween is very close on memory, but FCTween is a little bit slimmer because BUI keeps track of all possible UI properties in each instance
-- BUITween's update is really about the same speed as FCTween, the only thing binging it down is the cost of creating/destroying tweens; it uses an array to keep track of them and doesn't recycle, incurring a bit more cost
+- BUITween's update is really about the same speed as FCTween, the only thing bringing it down is the cost of creating/destroying tweens; it uses an array to keep track of them and doesn't recycle, incurring a bit more cost
 - I appreciate the engineers on the other tweening projects and do not wish to insult them, I learn lots of things from open source code and appreciate how they both put their code out in the wild!
 </details>
 
