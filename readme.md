@@ -561,15 +561,15 @@ Here is the stress testing project, if you want to run it yourself: https://gith
 | BUITween | 50.05 ms                | 27 to 60 fps      | 22 seconds                           | ~50MB  |
 | iTween   | 1207 ms                 | 3 to 12 fps       | 23 seconds                           | ~175MB |
 
-<details>
-<summary>Notes on performance (Expand)</summary>
+
+Notes on performance
 
 - Test details: create X tweens on initialize, and Y tweens per frame. The FPS varies over the course of the test because of the tweens per frame, so take the lowest and highest FPS.
 - This test assumes that you used EnsureCapacity() on game startup to pre-allocate all memory for FCTween, eliminating the time to allocate memory for new tweens
 - BUITween is very close on memory, but FCTween is a little bit slimmer because BUI keeps track of all possible UI properties in each instance
 - BUITween's update is really about the same speed as FCTween, the only thing bringing it down is the cost of creating/destroying tweens; it uses an array to keep track of them and doesn't recycle, incurring a bit more cost
 - I appreciate the engineers on the other tweening projects and do not wish to insult them, I learn lots of things from open source code and appreciate how they both put their code out in the wild!
-</details>
+
 
 </details>
 
