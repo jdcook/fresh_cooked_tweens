@@ -186,7 +186,7 @@ float FCEasing::EaseStepped(float t, int Steps)
 	}
 	else
 	{
-		return FMath::Floor(Steps * t) / Steps;
+		return FMath::FloorToFloat(Steps * t) / Steps;
 	}
 }
 
