@@ -580,8 +580,6 @@ Notes on performance
 
 I've only tested packaging for Windows, so if you are shipping on Linux, Mac, Android, iOS, or a console, be sure to test it early.
 
-Having worked on Android, Mac, and Nintendo Switch games before, my sense is that the library is not going to have porting issues - but also, every project seems to break the first time you try it in an environment it hasn't run in yet, and I haven't used those platforms for UE projects either! So test early!
-
 </details>
 
 # References
