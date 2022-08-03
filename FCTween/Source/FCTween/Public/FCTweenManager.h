@@ -53,10 +53,16 @@ public:
 
 	void EnsureCapacity(int Num)
 	{
-		for (int i = RecycledTweens->Num(); i < Num; ++i)
+		int NumExistingTweens = ActiveTweens->Num() + TweensToActivate->Num() + RecycledTweens->Num();
+		for (int i = NumExistingTweens; i < Num; ++i)
 		{
 			RecycledTweens->AddTail(new T());
 		}
+	}
+
+	int GetCurrentCapacity()
+	{
+		return ActiveTweens->Num() + TweensToActivate->Num() + RecycledTweens->Num();
 	}
 
 	void Update(float UnscaledDeltaSeconds, float DilatedDeltaSeconds, bool bIsGamePaused)

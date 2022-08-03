@@ -9,6 +9,8 @@
 #include "FCTweenInstanceVector2D.h"
 #include "FCTweenManager.h"
 
+FCTWEEN_API DECLARE_LOG_CATEGORY_EXTERN(LogFCTween, Log, All)
+
 class FCTWEEN_API FCTween
 {
 private:
@@ -16,6 +18,11 @@ private:
 	static FCTweenManager<FCTweenInstanceVector>* VectorTweenManager;
 	static FCTweenManager<FCTweenInstanceVector2D>* Vector2DTweenManager;
 	static FCTweenManager<FCTweenInstanceQuat>* QuatTweenManager;
+
+	static int NumReservedFloat;
+	static int NumReservedVector;
+	static int NumReservedVector2D;
+	static int NumReservedQuat;
 
 public:
 	static void Initialize();
@@ -33,6 +40,11 @@ public:
 	static void EnsureCapacity(int NumTweens);
 	static void Update(float UnscaledDeltaSeconds, float DilatedDeltaSeconds, bool bIsGamePaused);
 	static void ClearActiveTweens();
+
+	/**
+	 * @brief compare the current reserved memory for tweens against the initial capacity, to tell the developer if initial capacity needs to be increased
+	 */
+	static int CheckTweenCapacity();
 
 	/**
 	 * @brief Convenience function for UFCEasing::Ease()
