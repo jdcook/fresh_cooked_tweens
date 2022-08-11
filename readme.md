@@ -282,10 +282,6 @@ If you would like to set up FCTween as a code module, instead of a plugin (for e
 
 ![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/srcdir2.png)
 
-- Close your IDE, right click on your project's .uproject file, and click "Generate Visual Studio project files" to add it to the solution
-
-![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/generatefiles.png)
-
 - Add FCTween to the module names in your main module's Build.cs:
 ```c#
 PublicDependencyModuleNames.AddRange(new[] {"FCTween"});
@@ -306,6 +302,11 @@ PublicDependencyModuleNames.AddRange(new[] {"FCTween"});
     }
 ],
 ```
+
+- Close your IDE, right click on your project's .uproject file, and click "Generate Visual Studio project files" to add it to the solution
+
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/generatefiles.png)
+
 </details>
 
 ## Basic Usage
