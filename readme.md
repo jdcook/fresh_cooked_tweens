@@ -4,7 +4,6 @@
 
 A tweening library for Unreal Engine, by [Jared Cook](https://twitter.com/FreshCookedDev)
 
-
 UE4 and UE5 supported
 
 ### C++:
@@ -24,12 +23,21 @@ FCTween::Play(
 ### Blueprints:
 ![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/basic_usage_bp.png)
 
-<details>
-<summary>Why Tweens? (Expand)</summary>
+## Table of Contents
+> 1. [Plugin Setup](#plugin-setup)
+> 1. [Blueprints](#blueprintsection)
+> 1. [C++](#cppsection)
+> 1. [Easing Functions](#easing-functions)
+> 1. [Performance](#performance)
+> 1. [Platforms](#platforms)
+> 1. [References](#references)
+> 1. [License](#license)
 
-Tweening libraries provide convenient curve equations to ease a value be***tween*** a start and end, like a position, scale, rotation, alpha, color, or anything else you might want to smoothly change. They are useful in small projects and large projects. Many polished UIs have some kind of tween operating.
+## Why Tweens?
 
-It can be a large efficiency gain to let a programmer or designer quickly set up a tween with easily tunable values, instead of taking up the art department's precious time tweaking curves manually. I've often set up a tween with some ballpark values, and then passed it over to an artist to tweak, and they often appreciate how much time they save getting those polish animations in.
+Tweening libraries provide convenient curve equations to ease a value be***tween*** a start and end, like a position, scale, color, anything you want to smoothly change. They are useful in small projects and large projects. Many polished UIs have some kind of tween operating.
+
+It can be a large efficiency gain to let a programmer or designer quickly set up a tween with easily tunable values, instead of taking up the art department's precious time tweaking curves manually.
 
 In big projects, they are great for those little polish items. Some small projects can find broader use for them:
 
@@ -49,16 +57,15 @@ WaddleTween = FCTween::Play(
                   ->SetLoops(-1);
 ```
 
-</details>
+## Functionality already in Unreal Engine
 
-<details>
-<summary>Functionality already in Unreal Engine (Expand)</summary>
+It's good to know what is already available to you in-engine before installing other tools.
+- [Timelines](https://docs.unrealengine.com/4.27/en-US/ProgrammingAndScripting/Blueprints/UserGuide/Timelines/)
+  - Useful, but not as easy to tweak as tweens, or to set up in C++
+- Ease in/out/inout for sin, expo, circular, smoothstep - `FMath::InterpEaseIn()` lets you define your own exponent, which lets you do quad, cubic, quart, or more.
+- [Critically damped springs](https://www.alexisbacot.com/blog/the-art-of-damping)
+  - useful for a lot of things, especially cameras. Check out these functions if you haven't heard of that yet:
 
-It's good to know what is already available to you in-engine before installing other tools. Unreal provides [Timelines](https://docs.unrealengine.com/4.27/en-US/ProgrammingAndScripting/Blueprints/UserGuide/Timelines/) which can be very useful. They're not as convenient and quick to set up or tweak as tweens usually are, though. Time is money!
-
-And for easings, Unreal has a lot of functionality already - Epic provides ease in/out/inout for sin, expo, circular, smoothstep - `FMath::InterpEaseIn()` lets you define your own exponent, which lets you do quad, cubic, quart, or more. So if all you need is those easing equations or Timelines, Epic has already got you covered.
-
-Something Unreal provides that this library doesn't is [critically damped springs](https://www.alexisbacot.com/blog/the-art-of-damping), which is useful for a lot of things, especially cameras. Check out these functions if you haven't heard of that yet:
 ```c++
 FMath::SpringDamper()
 FMath::CriticallyDampedSmoothing()
@@ -66,15 +73,7 @@ UKismetMathLibrary::FloatSpringInterp()
 UKismetMathLibrary::QuaternionSpringInterp()
 ```
 
-What FCTween does provide is a more convenient, design-oriented way to define a tween, and some other useful ease equations (bounce, back, elastic, stepped). I wrote this library because I felt the in-engine functionality was a little too awkward to be useful for tweening purposes (especially in code). [BenUI](https://benui.ca/unreal/uitween/) has a great tweening library, but it's specifically for UI properties, and I wanted something more general and with blueprint nodes included.
-
-
-</details>
-
 # Plugin Setup
-<details>
-<summary>Expand</summary>
-
 - Copy the FCTween directory into your project's Plugins folder
     - If there is no Plugins folder, create one in the same directory as your .uproject file
 
@@ -91,131 +90,13 @@ PublicDependencyModuleNames.AddRange(new[] {"FCTween"});
 - Restart the project if needed
 - Verify everything is working by going to a blueprint, right clicking and looking for the "Tween" category
 - Package the project if you want to double-check it's installed correctly
-    - If you package the project and launch the .exe, and it says **Plugin 'FCTween' Failed to load because module 'FCTween' could not be found**, this probably means that you have a blueprint-only project. This is a current bug with UE, and the workaround is to make a dummy C++ file, and restart the project to recompile it.
+    - If you package the project and launch the .exe, and it says **Plugin 'FCTween' Failed to load because module 'FCTween' could not be found**, this probably means that you have a blueprint-only project. This is a current bug with UE, and the workaround is to turn it into a C++ project: make a dummy C++ file, and restart the project to recompile it.
         - In UE5: Tools/New C++ Class
         - In UE4: File/New C++ Class
     - It could also mean you just need to force it to recompile by deleting the project and plugin's Intermediate/Build folders and restart.
 
-</details>
-
-# Easing Functions
-<details>
-<summary>Expand</summary>
-
-Useful quick reference: https://easings.net/
-
-| Available  | Functions  |              |     |
-|------------|------------|--------------|-----|
-| Linear     | InCubic    | InExpo       | InBounce    |
-| Smoothstep | OutCubic   | OutExpo      | OutBounce   |
-| Stepped    | InOutCubic | InOutExpo    | InOutBounce |
-| InSine     | InQuart    | InCirc       | InBack      |
-| OutSine    | OutQuart   | OutCirc      | OutBack     |
-| InOutSine  | InOutQuart | InOutCirc    | InOutBack   |
-| InQuad     | InQuint    | InElastic    |             |
-| OutQuad    | OutQuint   | OutElastic   |             |
-| InOutQuad  | InOutQuint | InOutElastic |             |
-
-## In/Out explanation
-Most functions have an In, Out, and InOut version. This indicates which end of the function the easing takes place.
-
-"In" means the easing happens at the start:
-
-![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/in_cubic_demo.gif)
-
-"Out" means the easing happens at the end:
-
-![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/cubic_demo.gif)
-
-"InOut" means the easing happens at start and end:
-
-![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/inout_cubic_demo.gif)
-
-## Examples 
-
-Linear
-- It's just a lerp
-
-![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/linear_demo.gif)
-
-Sine
-- Quad is usually preferred, since this one uses a Sine operation and is more expensive. But it's more gradual than Quad is, so it can be useful in places where you need the smoothest ease possible.
-
-![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/sine_demo.gif)
-
-Quadratic
-- The bread and butter - cheap formula (t * t) and looks good
-
-![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/quad_demo.gif)
-
-Cubic
-- A more drastic Quadratic (t * t * t)
-
-![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/cubic_demo.gif)
-
-Quartic
-- Even more drastic (t * t * t * t)
-
-![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/quartic_demo.gif)
-
-Quintic
-- Veeeery drastic (t * t * t * t * t)
-
-![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/quintic_demo.gif)
-
-Exponential
-- Like Quintic but even sharper
-
-![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/exponential_demo.gif)
-
-Circular
-- The graph is a quarter circle. Makes it feel like the velocity changed suddenly. The start is faster than Quint but the end is slower than Quad. Use InCirc to be slow and then fast, instead 
-
-![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/circular_demo.gif)
-
-Smoothstep
-- Pretty similar to InOutQuad
-
-![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/smoothstep_demo.gif)
-
-Stepped
-- It's kind of like the opposite of easing, but here it is anyway
-- Change EaseParam1 to set how many steps to use. It's set to 10 by default
-
-![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/stepped_demo.gif)
-
-Elastic
-- Cartoony "boing" effect. May take parameter tweaking to get it just how you want it in your game. Use EaseParam1 and EaseParam2 to tweak the amplitude and period. Looks good with scale, or menus transitioning on screen.
-- EaseParam1 (Amplitude) is set to 1.0 by default. Raise it to make it wobble farther, lower it to make it smaller. 
-- EaseParam2 (Period) is set to 0.2 by default. Smaller is spazzier (more wave cycles in the same amount of time). Bigger means less cycles.
-
-![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/elastic_scale_demo.gif)
-
-![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/elastic_demo_2.gif)
-
-Bounce
-- Bounces back from the target a couple of times
-
-![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/bounce_demo.gif)
-
-InBack
-- Anticipation; pull back a little before going forward
-- EaseParam1 (Overshoot) is set to 1.70158 by default. If you want to know why, here you go: https://github.com/Michaelangel007/easing#the-magic-of-170158
-
-![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/back_demo.gif)
-
-OutBack
-- (insert low effort Australia joke here)
-- It overshoots the target and then pulls back to meet it. You can tweak the overshoot amount with EaseParam1.
-
-![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/outback_demo.gif)
-
-</details>
-
-
+<a name="blueprintsection"></a>
 # Blueprints
-<details>
-<summary>Expand</summary>
 
 ## Basic Usage
 Add a BP task from the "Tween" category.
@@ -260,12 +141,9 @@ Same as ease, but you can override the baked in parameters for Elastic, Bounce, 
 
 ![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/ease_params_bp.png)
 
-</details>
 
+<a name="cppsection"></a>
 # C++
-
-<details>
-<summary>Expand</summary>
 
 ## Module Setup
 
@@ -358,7 +236,7 @@ virtual void BeginPlay() override
 {
     Tween = FCTween::Play(
         Target1->GetActorLocation(), Target2->GetActorLocation(), [&](FVector t) { SetActorLocation(t); }, 10.0f);
-    // the set functions return the base tween class, just be aware you'll have to static_cast it 
+    // the set functions return the base tween class, be aware you'll have to static_cast it 
     // if you include it in the same line
     Tween->SetLoops(-1);
 }
@@ -431,7 +309,12 @@ public:
 	UPROPERTY()
 	int Foo = 0;
 
+	// raw pointer
 	FCTweenInstance* Tween = nullptr;
+    
+	// UObject wrapper version
+	UPROPERTY()
+	UFCTweenUObject* TweenUObj;
 
 	virtual void BeginPlay() override
 	{
@@ -439,7 +322,11 @@ public:
 
 		// tween a float from 0 to 1, over .5 seconds, infinitely looping
 		Tween = FCTween::Play(0, 1, [&](float t) { Foo = t; }, .5f)
-		    ->SetLoops(-1);
+			->SetLoops(-1);
+		
+		// UObject version
+		TweenUObj = FCTween::Play()
+		->CreateUObject();
 	}
 
 	virtual void BeginDestroy() override
@@ -450,6 +337,12 @@ public:
 			Tween->Destroy();
 			Tween = nullptr;
 		}
+		
+		// UObject version
+		if (IsValid(TweenUObj))
+		{
+			TweenUObj->Destroy();
+		}
 
 		Super::BeginDestroy();
 	}
@@ -457,7 +350,7 @@ public:
 ```
 - If you keep a reference to an FCTweenInstance, do not mark it as UPROPERTY(), since it's not a UObject
   - When using the recompile button (live coding), be aware that making changes to a header with a non-uproperty field can bork your memory and cause an editor crash sometimes (usually in BeginDestroy), even if you're managing it properly in code. Close the editor and restart from your IDE when you want to be safe. Or make sure to save and commit your current changes to source control first.
-  - If you want to avoid that, use UFCTweenUObject instead, since that IS a UObject, and its header won't be changing
+  - If you want to avoid that, **use UFCTweenUObject** instead, since that IS a UObject, and its header won't be changing. Be aware that the UObject is not recycled, so there's a performance cost for that usage.
 - Tweens will get recycled when they are finished. If you keep a pointer to it after it's been completed, the tween will just be idle or playing a different set of options/callbacks from who knows where, so you will end up with confusing bugs if you try to operate on it. If you don't want them to get recycled:
   - set NumLoops to -1 (infinite) if you want it to infinitely replay, and you can pause/unpause it
   - OR if you need to be able to restart a tween later on, after it is finished, call `Tween->SetAutoDestroy(false)` to make sure it doesn't get auto-recycled. This is how UFCTweenUObject and the BP tasks make sure their tweens are always valid.
@@ -518,11 +411,118 @@ public:
 };
 ```
 
-</details>
+# Easing Functions
+Useful quick reference: https://easings.net/
+
+| Available  | Functions  |              |     |
+|------------|------------|--------------|-----|
+| Linear     | InCubic    | InExpo       | InBounce    |
+| Smoothstep | OutCubic   | OutExpo      | OutBounce   |
+| Stepped    | InOutCubic | InOutExpo    | InOutBounce |
+| InSine     | InQuart    | InCirc       | InBack      |
+| OutSine    | OutQuart   | OutCirc      | OutBack     |
+| InOutSine  | InOutQuart | InOutCirc    | InOutBack   |
+| InQuad     | InQuint    | InElastic    |             |
+| OutQuad    | OutQuint   | OutElastic   |             |
+| InOutQuad  | InOutQuint | InOutElastic |             |
+
+## In/Out explanation
+Most functions have an In, Out, and InOut version. This indicates which end of the function the easing takes place.
+
+"In" means the easing happens at the start:
+
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/in_cubic_demo.gif)
+
+"Out" means the easing happens at the end:
+
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/cubic_demo.gif)
+
+"InOut" means the easing happens at start and end:
+
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/inout_cubic_demo.gif)
+
+## Examples
+
+Linear
+- It's just a lerp
+
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/linear_demo.gif)
+
+Sine
+- Quad is usually preferred, since this one uses a Sine operation and is more expensive. But it's more gradual than Quad is, so it can be useful in places where you need the smoothest ease possible.
+
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/sine_demo.gif)
+
+Quadratic
+- The bread and butter - cheap formula (t * t) and looks good
+
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/quad_demo.gif)
+
+Cubic
+- A more drastic Quadratic (t * t * t)
+
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/cubic_demo.gif)
+
+Quartic
+- Even more drastic (t * t * t * t)
+
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/quartic_demo.gif)
+
+Quintic
+- Veeeery drastic (t * t * t * t * t)
+
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/quintic_demo.gif)
+
+Exponential
+- Like Quintic but even sharper
+
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/exponential_demo.gif)
+
+Circular
+- The graph is a quarter circle. Makes it feel like the velocity changed suddenly. The start is faster than Quint but the end is slower than Quad. Use InCirc to be slow and then fast, instead
+
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/circular_demo.gif)
+
+Smoothstep
+- Pretty similar to InOutQuad
+
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/smoothstep_demo.gif)
+
+Stepped
+- It's kind of like the opposite of easing, but here it is anyway
+- Change EaseParam1 to set how many steps to use. It's set to 10 by default
+
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/stepped_demo.gif)
+
+Elastic
+- Cartoony "boing" effect. May take parameter tweaking to get it just how you want it in your game. Use EaseParam1 and EaseParam2 to tweak the amplitude and period. Looks good with scale, or menus transitioning on screen.
+- EaseParam1 (Amplitude) is set to 1.0 by default. Raise it to make it wobble farther, lower it to make it smaller.
+- EaseParam2 (Period) is set to 0.2 by default. Smaller is spazzier (more wave cycles in the same amount of time). Bigger means less cycles.
+
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/elastic_scale_demo.gif)
+
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/elastic_demo_2.gif)
+
+Bounce
+- Bounces back from the target a couple of times
+
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/bounce_demo.gif)
+
+InBack
+- Anticipation; pull back a little before going forward
+- EaseParam1 (Overshoot) is set to 1.70158 by default. If you want to know why, here you go: https://github.com/Michaelangel007/easing#the-magic-of-170158
+
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/back_demo.gif)
+
+OutBack
+- (insert low effort Australia joke here)
+- It overshoots the target and then pulls back to meet it. You can tweak the overshoot amount with EaseParam1.
+
+![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/outback_demo.gif)
+
+
 
 # Performance
-<details>
-<summary>Expand</summary>
 
 - FCTween uses a LinkedList to keep track of tweens, for fast adding/removal
 - Recycles old tweens to avoid unnecessary memory allocations
@@ -571,23 +571,11 @@ Notes on performance
 - BUITween's update is really about the same speed as FCTween, the only thing bringing it down is the cost of creating/destroying tweens; it uses an array to keep track of them and doesn't recycle, incurring a bit more cost
 - I appreciate the engineers on the other tweening projects and do not wish to insult them, I learn lots of things from open source code and appreciate how they both put their code out in the wild!
 
-
-</details>
-
 # Platforms
 
-<details>
-<summary>Expand</summary>
-
-I've only tested packaging for Windows, so if you are shipping on Linux, Mac, Android, iOS, or a console, be sure to test it early.
-
-</details>
+I've only tested packaging for Windows, so if you are shipping on Linux, Mac, Android, iOS, or a console, be sure to test packaging early.
 
 # References
-<details>
-<summary>Expand</summary>
-
-
 - https://easings.net/
   - No code taken from this one, but the graphs are useful visual reference
 - http://robertpenner.com/easing/
@@ -598,8 +586,6 @@ I've only tested packaging for Windows, so if you are shipping on Linux, Mac, An
   - Phaser has a surprisingly good tweening library, which I have utilized for Phaser-based web games before
 - https://github.com/benui-dev/UE-BUITween
   - A couple of ideas taken from BenUI for setting up the module and naming
-
-</details>
 
 # License
 
