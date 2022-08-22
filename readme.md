@@ -309,7 +309,12 @@ public:
 	UPROPERTY()
 	int Foo = 0;
 
+	// raw pointer
 	FCTweenInstance* Tween = nullptr;
+    
+	// UObject wrapper version
+	UPROPERTY()
+	UFCTweenUObject* TweenUObj;
 
 	virtual void BeginPlay() override
 	{
@@ -317,7 +322,11 @@ public:
 
 		// tween a float from 0 to 1, over .5 seconds, infinitely looping
 		Tween = FCTween::Play(0, 1, [&](float t) { Foo = t; }, .5f)
-		    ->SetLoops(-1);
+			->SetLoops(-1);
+		
+		// UObject version
+		TweenUObj = FCTween::Play()
+		->CreateUObject();
 	}
 
 	virtual void BeginDestroy() override
@@ -328,6 +337,12 @@ public:
 			Tween->Destroy();
 			Tween = nullptr;
 		}
+		
+		// UObject version
+		if (IsValid(TweenUObj))
+		{
+			TweenUObj->Destroy();
+		}
 
 		Super::BeginDestroy();
 	}
@@ -335,7 +350,7 @@ public:
 ```
 - If you keep a reference to an FCTweenInstance, do not mark it as UPROPERTY(), since it's not a UObject
   - When using the recompile button (live coding), be aware that making changes to a header with a non-uproperty field can bork your memory and cause an editor crash sometimes (usually in BeginDestroy), even if you're managing it properly in code. Close the editor and restart from your IDE when you want to be safe. Or make sure to save and commit your current changes to source control first.
-  - If you want to avoid that, use UFCTweenUObject instead, since that IS a UObject, and its header won't be changing
+  - If you want to avoid that, **use UFCTweenUObject** instead, since that IS a UObject, and its header won't be changing
 - Tweens will get recycled when they are finished. If you keep a pointer to it after it's been completed, the tween will just be idle or playing a different set of options/callbacks from who knows where, so you will end up with confusing bugs if you try to operate on it. If you don't want them to get recycled:
   - set NumLoops to -1 (infinite) if you want it to infinitely replay, and you can pause/unpause it
   - OR if you need to be able to restart a tween later on, after it is finished, call `Tween->SetAutoDestroy(false)` to make sure it doesn't get auto-recycled. This is how UFCTweenUObject and the BP tasks make sure their tweens are always valid.
