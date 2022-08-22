@@ -25,8 +25,8 @@ FCTween::Play(
 
 ## Table of Contents
 > 1. [Plugin Setup](#plugin-setup)
-> 1. [Blueprints](#blueprints)
-> 1. [C++](#c++)
+> 1. [Blueprints](#blueprintssectio)
+> 1. [C++](#cppsection)
 > 1. [Easing Functions](#easing-functions)
 > 1. [Performance](#performance)
 > 1. [Platforms](#platforms)
@@ -96,7 +96,7 @@ PublicDependencyModuleNames.AddRange(new[] {"FCTween"});
     - It could also mean you just need to force it to recompile by deleting the project and plugin's Intermediate/Build folders and restart.
 
 # Blueprints
-
+<a name="blueprintsection"></a>
 ## Basic Usage
 Add a BP task from the "Tween" category.
 
@@ -142,6 +142,7 @@ Same as ease, but you can override the baked in parameters for Elastic, Bounce, 
 
 
 # C++
+<a name="cppsection"></a>
 
 ## Module Setup
 
