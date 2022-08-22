@@ -236,7 +236,7 @@ virtual void BeginPlay() override
 {
     Tween = FCTween::Play(
         Target1->GetActorLocation(), Target2->GetActorLocation(), [&](FVector t) { SetActorLocation(t); }, 10.0f);
-    // the set functions return the base tween class, just be aware you'll have to static_cast it 
+    // the set functions return the base tween class, be aware you'll have to static_cast it 
     // if you include it in the same line
     Tween->SetLoops(-1);
 }
@@ -350,7 +350,7 @@ public:
 ```
 - If you keep a reference to an FCTweenInstance, do not mark it as UPROPERTY(), since it's not a UObject
   - When using the recompile button (live coding), be aware that making changes to a header with a non-uproperty field can bork your memory and cause an editor crash sometimes (usually in BeginDestroy), even if you're managing it properly in code. Close the editor and restart from your IDE when you want to be safe. Or make sure to save and commit your current changes to source control first.
-  - If you want to avoid that, **use UFCTweenUObject** instead, since that IS a UObject, and its header won't be changing. Just be aware that the UObject is not recycled, so there's a performance cost for that usage.
+  - If you want to avoid that, **use UFCTweenUObject** instead, since that IS a UObject, and its header won't be changing. Be aware that the UObject is not recycled, so there's a performance cost for that usage.
 - Tweens will get recycled when they are finished. If you keep a pointer to it after it's been completed, the tween will just be idle or playing a different set of options/callbacks from who knows where, so you will end up with confusing bugs if you try to operate on it. If you don't want them to get recycled:
   - set NumLoops to -1 (infinite) if you want it to infinitely replay, and you can pause/unpause it
   - OR if you need to be able to restart a tween later on, after it is finished, call `Tween->SetAutoDestroy(false)` to make sure it doesn't get auto-recycled. This is how UFCTweenUObject and the BP tasks make sure their tweens are always valid.
