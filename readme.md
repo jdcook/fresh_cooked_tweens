@@ -25,7 +25,7 @@ FCTween::Play(
 
 ## Table of Contents
 > 1. [Plugin Setup](#plugin-setup)
-> 1. [Blueprints](#blueprintssectio)
+> 1. [Blueprints](#blueprintsection)
 > 1. [C++](#cppsection)
 > 1. [Easing Functions](#easing-functions)
 > 1. [Performance](#performance)
@@ -95,8 +95,9 @@ PublicDependencyModuleNames.AddRange(new[] {"FCTween"});
         - In UE4: File/New C++ Class
     - It could also mean you just need to force it to recompile by deleting the project and plugin's Intermediate/Build folders and restart.
 
-# Blueprints
 <a name="blueprintsection"></a>
+# Blueprints
+
 ## Basic Usage
 Add a BP task from the "Tween" category.
 
@@ -141,8 +142,8 @@ Same as ease, but you can override the baked in parameters for Elastic, Bounce, 
 ![](https://freshcookedgames.com/img/fresh_cooked_tweens_imgs/ease_params_bp.png)
 
 
-# C++
 <a name="cppsection"></a>
+# C++
 
 ## Module Setup
 
