@@ -360,7 +360,7 @@ public:
 ## Manual Memory Management
 
 If you have a case that the recycling system doesn't work for, or need to do something custom, you can manage the memory and the update manually.
-  - The `new` operator is overloaded in UE ([ModuleBoilerplate.h](https://github.com/EpicGames/UnrealEngine/blob/release/Engine/Source/Runtime/Core/Public/Modules/Boilerplate/ModuleBoilerplate.h)) to use FMemory calls (which uses the mimalloc library on Windows), so it's safe to use new/delete in this way in the UE ecosystem.
+  - The `new` operator is overridden in UE ([ModuleBoilerplate.h](https://github.com/EpicGames/UnrealEngine/blob/release/Engine/Source/Runtime/Core/Public/Modules/Boilerplate/ModuleBoilerplate.h)) to use FMemory calls (which uses the mimalloc library on Windows), so it's safe to use new/delete in this way in the UE ecosystem.
 ```c++
 #pragma once
 
