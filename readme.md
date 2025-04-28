@@ -35,7 +35,7 @@ FCTween::Play(
 
 ## Why Tweens?
 
-Tweening libraries provide convenient curve equations to ease a value be***tween*** a start and end, like a position, scale, color, anything you want to smoothly change. They are useful in small projects and large projects. Many polished UIs have some kind of tween operating.
+Tweening libraries provide convenient curve functions to ease a value be***tween*** a start and end, like a position, scale, color, anything you want to smoothly change. They are useful in small projects and large projects. Many polished UIs have some kind of tween operating.
 
 It can be a large efficiency gain to let a programmer or designer quickly set up a tween with easily tunable values, instead of taking up the art department's precious time tweaking curves manually.
 
@@ -515,7 +515,6 @@ InBack
 ![](./images/back_demo.gif)
 
 OutBack
-- (insert low effort Australia joke here)
 - It overshoots the target and then pulls back to meet it. You can tweak the overshoot amount with EaseParam1.
 
 ![](./images/outback_demo.gif)
@@ -569,26 +568,24 @@ Notes on performance
 - This test assumes that you used EnsureCapacity() on game startup to pre-allocate all memory for FCTween, eliminating the time to allocate memory for new tweens
 - BUITween is very close on memory, but FCTween is a little bit slimmer because BUI keeps track of all possible UI properties in each instance
 - BUITween's update is really about the same speed as FCTween, the only thing bringing it down is the cost of creating/destroying tweens; it uses an array to keep track of them and doesn't recycle, incurring a bit more cost
-- I appreciate the engineers on the other tweening projects and do not wish to insult them, I learn lots of things from open source code and appreciate how they both put their code out in the wild!
+- I appreciate the engineers on the other tweening projects, I learn lots of things from open source code and appreciate how they both put their code out in the wild.
 
 # Platforms
 
 I've only tested packaging for Windows, so if you are shipping on Linux, Mac, Android, iOS, or a console, be sure to test packaging early.
 
 # References
-- https://easings.net/
-  - No code taken from this one, but the graphs are useful visual reference
 - http://robertpenner.com/easing/
-  - The original easing equations that everyone just riffs on nowadays
+  - The original easing functions.
 - https://github.com/Michaelangel007/easing
-  - Much more useful versions of those easing equations
+  - Handier versions of those functions.
 - https://github.com/photonstorm/phaser/tree/master/src/math/easing
-  - Phaser has a surprisingly good tweening library, which I have utilized for Phaser-based web games before
-- https://github.com/benui-dev/UE-BUITween
-  - A couple of ideas taken from BenUI for setting up the module and naming
+  - The specific version of the Stepped and Elastic functions comes from Phaser.
+- https://easings.net/
+  - Useful visual reference
 
 # License
 
 MIT
 
-The easing equations themselves are derivative of other people's work, and their licenses have been included in `FCEasing.h`
+The easing functions themselves are derivative of other people's work, and their licenses have been included in `FCEasing.h`
