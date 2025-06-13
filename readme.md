@@ -1,7 +1,7 @@
 ﻿## Purchase the Pro version on Fab
 https://www.fab.com/listings/8d37a3cd-b7d1-4796-9d9e-b160a52192f8
-- Easy weak lambdas with `BindTo()`
-- TweenQueues
+- Easy-to-use weak lambda, with `BindTo()`
+- TweenQueues, to queue up one tween after another
 - Spline tweens
 - Shortcut functions such as TweenActorLocation and TweenWidgetOpacity
 
