@@ -1,16 +1,17 @@
-﻿# Fresh Cooked Tweens
+﻿## Purchase the Pro version on Fab
+https://www.fab.com/listings/8d37a3cd-b7d1-4796-9d9e-b160a52192f8
+- Easy weak lambdas with `BindTo()`
+- TweenQueues
+- Spline tweens
+- Shortcut functions such as TweenActorLocation and TweenWidgetOpacity
 
+# Fresh Cooked Tweens
 ![](FCTween/Resources/Icon128.png) 
 
 A tweening library for Unreal Engine, by [Jared Cook](https://twitter.com/FreshCookedDev)
 
 UE4 and UE5 supported
 
-Purchase the Pro version on Fab here: https://www.fab.com/listings/8d37a3cd-b7d1-4796-9d9e-b160a52192f8
-- Easy weak lambdas with `BindTo()`
-- TweenQueues
-- Spline tweens
-- Shortcut functions such as TweenActorLocation and TweenWidgetOpacity
 
 ### C++:
 
