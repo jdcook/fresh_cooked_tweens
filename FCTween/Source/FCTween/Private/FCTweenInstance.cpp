@@ -190,7 +190,7 @@ void FCTweenInstance::Unpause()
 
 void FCTweenInstance::Update(float UnscaledDeltaSeconds, float DilatedDeltaSeconds, bool bIsGamePaused)
 {
-	if (bIsPaused || !bIsActive || bIsGamePaused && !bCanTickDuringPause)
+	if (bIsPaused || !bIsActive || (bIsGamePaused && !bCanTickDuringPause))
 	{
 		return;
 	}
