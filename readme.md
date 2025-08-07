@@ -3,9 +3,18 @@ https://www.fab.com/listings/8d37a3cd-b7d1-4796-9d9e-b160a52192f8
 
 Exclusive to the pro version:
 - Easily add **lambda safety** by calling `Tween->BindTo(Object)`
-- Use **TweenQueues** to queue up multiple tweens to play in sequence
+	- No need to add manual safety checks, or to clean up on BeginDestroy anymore!
+- **TweenQueues** allow playing multiple tweens in a sequence
 - **Spline** tweens
-- **38 Shortcut functions** such as TweenActorLocation, TweenWidgetOpacity, TweenWidgetCanvasAnchor, and TweenMaterialScalar
+	- Tween actors along splines, or get spline values every frame with any easing equation!
+- **38 Shortcut functions** such as:
+    - *TweenActorLocation*
+    - *TweenMaterialScalar*
+    - *TweenWidgetOpacity*
+    - *TweenWidgetCanvasAnchor*
+    - And many others, with more to come!
+- Builtin C++ support for **dynamic Start and End values**, by passing lambdas
+	- No need to hold a reference to the tween instance!
 - Continued development, bugfixes, and support
 
 # Fresh Cooked Tweens
