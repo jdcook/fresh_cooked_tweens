@@ -6,6 +6,7 @@ Exclusive to the pro version:
 - Use **TweenQueues** to queue up multiple tweens to play in sequence
 - **Spline** tweens
 - **38 Shortcut functions** such as TweenActorLocation, TweenWidgetOpacity, TweenWidgetCanvasAnchor, and TweenMaterialScalar
+- Continued development, bugfixes, and support
 
 # Fresh Cooked Tweens
 ![](FCTween/Resources/Icon128.png) 
