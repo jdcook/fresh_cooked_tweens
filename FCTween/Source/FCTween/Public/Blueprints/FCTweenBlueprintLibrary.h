@@ -1,9 +1,11 @@
-﻿// MIT License - Copyright (c) 2022 Jared Cook
+﻿// MIT License - Copyright 2026 Jared Cook
 #pragma once
 #include "FCEasing.h"
 #include "FCTween.h"
+#include "Kismet/BlueprintFunctionLibrary.h"
 
 #include "FCTweenBlueprintLibrary.generated.h"
+
 
 UCLASS()
 class FCTWEEN_API UFCTweenBlueprintLibrary : public UBlueprintFunctionLibrary
@@ -29,9 +31,4 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Tween")
 	static float EaseWithParams(float t, EFCEase EaseType, float Param1 = 0, float Param2 = 0);
 
-	// Make sure there are at least these many of each type of tween available in memory. Call this only once, probably in a
-	// GameInstance blueprint, if you need more initial memory reserved on game startup.
-	UFUNCTION(BlueprintCallable, Category = "Tween|Utility")
-	static void EnsureTweenCapacity(
-		int NumFloatTweens = 75, int NumVectorTweens = 50, int NumVector2DTweens = 50, int NumQuatTweens = 10);
 };

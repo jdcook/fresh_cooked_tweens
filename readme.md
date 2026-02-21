@@ -3,19 +3,20 @@ https://www.fab.com/listings/8d37a3cd-b7d1-4796-9d9e-b160a52192f8
 
 Exclusive to the pro version:
 - Easily add **lambda safety** by calling `Tween->BindTo(Object)`
-	- No need to add manual safety checks, or to clean up on BeginDestroy anymore!
-- **TweenQueues** allow playing multiple tweens in a sequence
+	- No need to add manual safety checks, or to clean up on BeginDestroy anymore.
+- **TweenQueues** allow playing multiple tweens in a sequence.
 - **Spline** tweens
-	- Tween actors along splines, or get spline values every frame with any easing equation!
+	- Tween actors along splines, or get spline values every frame with any easing equation.
+- Tween new types: **Vector4**, **Transform**, **Color**
 - **38 Shortcut functions** such as:
     - *TweenActorLocation*
     - *TweenMaterialScalar*
     - *TweenWidgetOpacity*
     - *TweenWidgetCanvasAnchor*
-    - And many others, with more to come!
-- Builtin C++ support for **dynamic Start and End values**, by passing lambdas
-	- No need to hold a reference to the tween instance!
-- Continued development, bugfixes, and support
+    - And many others, with more to come.
+- Builtin C++ support for **dynamic Start and End values**, by passing lambdas.
+	- No need to hold a reference to the tween instance.
+- Continued development and support.
 
 # Fresh Cooked Tweens
 ![](FCTween/Resources/Icon128.png) 
@@ -93,6 +94,7 @@ UKismetMathLibrary::QuaternionSpringInterp()
 ```
 
 # Plugin Setup
+- If using Unreal 4.27, copy the contents of FCTween_4_27.uplugin into FCTween/FCTween.uplugin.
 - Copy the FCTween directory into your project's Plugins folder
     - If there is no Plugins folder, create one in the same directory as your .uproject file
 
@@ -295,20 +297,6 @@ FCTween::Play(
     2.0f);
 ```
 
-- **Use UFCTweenUObject**
-  - This is a simple UObject wrapper class. You can save this as a UPROPERTY and it will clean up the tween in BeginDestroy().
-  - This is nice for something like an item pickup that has a looping tween animation you set up in code, and you want it to get auto-cleaned up when the pickup is destroyed instead of manually managing it.
-```c++
-UPROPERTY()
-UFCTweenUObject* TweenObj;
-	
-TweenObj = FCTween::Play()
-    ->CreateUObject();
-```
-
-- **Make a "safe mode" by modifying the library to add try/catch statements around lambda execution in FCTweenInstance, and enable exceptions in the build options**
-  - I didn't add this option because it's a controversial move in the C++ world; and the moment I started thinking about how to add it, I sensed a great disturbance, as if millions of voices suddenly cried out in disgust. And, honestly, the other options seem like a better way to handle it.
-
 ## Tween Pointers
 
 ```c++
@@ -330,10 +318,6 @@ public:
 
 	// raw pointer
 	FCTweenInstance* Tween = nullptr;
-    
-	// UObject wrapper version
-	UPROPERTY()
-	UFCTweenUObject* TweenUObj;
 
 	virtual void BeginPlay() override
 	{
@@ -342,10 +326,6 @@ public:
 		// tween a float from 0 to 1, over .5 seconds, infinitely looping
 		Tween = FCTween::Play(0, 1, [&](float t) { Foo = t; }, .5f)
 			->SetLoops(-1);
-		
-		// UObject version
-		TweenUObj = FCTween::Play()
-		->CreateUObject();
 	}
 
 	virtual void BeginDestroy() override
@@ -356,23 +336,16 @@ public:
 			Tween->Destroy();
 			Tween = nullptr;
 		}
-		
-		// UObject version
-		if (IsValid(TweenUObj))
-		{
-			TweenUObj->Destroy();
-		}
 
 		Super::BeginDestroy();
 	}
 };
 ```
-- If you keep a reference to an FCTweenInstance, do not mark it as UPROPERTY(), since it's not a UObject
-  - When using the recompile button (live coding), be aware that making changes to a header with a non-uproperty field can bork your memory and cause an editor crash sometimes (usually in BeginDestroy), even if you're managing it properly in code. Close the editor and restart from your IDE when you want to be safe. Or make sure to save and commit your current changes to source control first.
-  - If you want to avoid that, **use UFCTweenUObject** instead, since that IS a UObject, and its header won't be changing. Be aware that the UObject is not recycled, so there's a performance cost for that usage.
+- If you keep a reference to an FCTweenInstance, do not mark it as a UPROPERTY(), since it's not a UObject.
+  - When using the recompile button (live coding), be aware that making changes to a header with a non-uproperty field can mess up your memory and cause an editor crash sometimes (usually in BeginDestroy), even if you're managing it properly in code. Close the editor and restart from your IDE when you want to be safe. Or make sure to save and commit your current changes to source control first.
 - Tweens will get recycled when they are finished. If you keep a pointer to it after it's been completed, the tween will just be idle or playing a different set of options/callbacks from who knows where, so you will end up with confusing bugs if you try to operate on it. If you don't want them to get recycled:
   - set NumLoops to -1 (infinite) if you want it to infinitely replay, and you can pause/unpause it
-  - OR if you need to be able to restart a tween later on, after it is finished, call `Tween->SetAutoDestroy(false)` to make sure it doesn't get auto-recycled. This is how UFCTweenUObject and the BP tasks make sure their tweens are always valid.
+  - OR if you need to be able to restart a tween later on, after it is finished, call `Tween->SetAutoDestroy(false)` to make sure it doesn't get auto-recycled. This is how the BP tasks make sure their tweens are always valid.
   - If you used one of the above cases, make sure to call Destroy on the tween when you are done with it, so that it gets recycled. Otherwise that memory will never get reclaimed.
 
 
@@ -539,59 +512,17 @@ OutBack
 ![](./images/outback_demo.gif)
 
 
-
 # Performance
 
 - FCTween uses a LinkedList to keep track of tweens, for fast adding/removal
 - Recycles old tweens to avoid unnecessary memory allocations
-- Lets you EnsureCapacity() to preallocate your memory during game load
+- Allows configuring how much memory is preallocated during game load
     - also comes with console warnings when you stop PIE to let you know when you could increase your initial capacity for performance
 - Small memory footprint, using basic C++ classes outside of the UObject ecosystem
 
-## Stress Tests
+# Supported Platforms
 
-Here is the stress testing project, if you want to run it yourself: https://github.com/jdcook/ue_tween_library_stress_test
-
-**Memory is the difference shown in the Low Level Memory Tracker once the tweens initialize. I don't believe any of the libraries take up that many Megabytes, that is just what is displayed in the LLM. So it's just to get an idea of how the libraries compare.**
-
-### 20,000 tweens on startup, +1 per frame
-
-|          | Initialize Milliseconds | Frames Per Second | Freeze after startup tweens complete | Memory |
-|----------|-------------------------|-------------------|--------------------------------------|--------|
-| FCTween  | 1.39 ms                 | 60 fps            | 0                                    | ~9MB   |
-| BUITween | 10.06 ms                | 55 to 60 fps      | 0                                    | ~10 MB |
-| iTween   | 282 ms                  | 11 to 46 fps      | 2 seconds                            | ~41MB  |
-
-
-### 40,000 tweens on startup, +40 per frame
-
-|          | Initialize Milliseconds | Frames Per Second | Freeze after startup tweens complete | Memory |
-|----------|-------------------------|-------------------|--------------------------------------|--------|
-| FCTween  | 2.4 ms                  | 60 fps            | 0                                    | ~21MB  |
-| BUITween | 25.58 ms                | 40 to 60 fps      | 7 seconds                            | ~34 MB |
-| iTween   | 578 ms                  | 6 to 24 fps       | 8 seconds                            | ~88MB  | 
-
-
-### 80,000 tweens on startup, +80 per frame
-
-|          | Initialize Milliseconds | Frames Per Second | Freeze after startup tweens complete | Memory |
-|----------|-------------------------|-------------------|--------------------------------------|--------|
-| FCTween  | 4.23 ms                 | 60 fps            | 0                                    | ~44MB  |
-| BUITween | 50.05 ms                | 27 to 60 fps      | 22 seconds                           | ~50MB  |
-| iTween   | 1207 ms                 | 3 to 12 fps       | 23 seconds                           | ~175MB |
-
-
-Notes on performance
-
-- Test details: create X tweens on initialize, and Y tweens per frame. The FPS varies over the course of the test because of the tweens per frame, so take the lowest and highest FPS.
-- This test assumes that you used EnsureCapacity() on game startup to pre-allocate all memory for FCTween, eliminating the time to allocate memory for new tweens
-- BUITween is very close on memory, but FCTween is a little bit slimmer because BUI keeps track of all possible UI properties in each instance
-- BUITween's update is really about the same speed as FCTween, the only thing bringing it down is the cost of creating/destroying tweens; it uses an array to keep track of them and doesn't recycle, incurring a bit more cost
-- I appreciate the engineers on the other tweening projects, I learn lots of things from open source code and appreciate how they both put their code out in the wild.
-
-# Platforms
-
-I've only tested packaging for Windows, so if you are shipping on Linux, Mac, Android, iOS, or a console, be sure to test packaging early.
+Windows, Linux, and Android.
 
 # References
 - http://robertpenner.com/easing/
@@ -607,4 +538,4 @@ I've only tested packaging for Windows, so if you are shipping on Linux, Mac, An
 
 MIT
 
-The easing functions themselves are derivative of other people's work, and their licenses have been included in `FCEasing.h`
+The easing functions themselves are derivative of other people's work, and their licenses have been included in the ThirdParty directories.

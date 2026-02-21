@@ -1,13 +1,13 @@
-
+// MIT License - Copyright 2026 Jared Cook
 #include "FCTweenInstanceQuat.h"
 
-void FCTweenInstanceQuat::Initialize(
-	FQuat InStart, FQuat InEnd, TFunction<void(FQuat)> InOnUpdate, float InDurationSecs, EFCEase InEaseType)
+FCTweenInstanceQuat* FCTweenInstanceQuat::Initialize(FQuat InStart, FQuat InEnd, TFunction<void(FQuat)> InOnUpdate, float InDurationSecs, EFCEase InEaseType)
 {
 	this->StartValue = InStart;
 	this->EndValue = InEnd;
 	this->OnUpdate = MoveTemp(InOnUpdate);
 	this->InitializeSharedMembers(InDurationSecs, InEaseType);
+	return this;
 }
 
 void FCTweenInstanceQuat::ApplyEasing(float EasedPercent)

@@ -1,12 +1,15 @@
-﻿// MIT License - Copyright (c) 2022 Jared Cook
+﻿// MIT License - Copyright 2026 Jared Cook
 #pragma once
+#pragma warning(push)
+#pragma warning(disable : 4946)
+#include "FCTweenInstance.h"
 
 template <class T>
 class FCTWEEN_API FCTweenManager
 {
+protected:
 	typedef typename TDoubleLinkedList<T*>::TDoubleLinkedListNode TNode;
 
-private:
 	TDoubleLinkedList<T*>* ActiveTweens;
 	TDoubleLinkedList<T*>* RecycledTweens;
 	// tweens to activate on the next update
@@ -24,7 +27,7 @@ public:
 		}
 	}
 
-	~FCTweenManager()
+	virtual ~FCTweenManager()
 	{
 		TNode* CurNode = RecycledTweens->GetHead();
 		while (CurNode != nullptr)
@@ -73,7 +76,7 @@ public:
 		{
 			TNode* NodeToActivate = CurNode;
 			CurNode = CurNode->GetNextNode();
-			NodeToActivate->GetValue()->Start();
+			StartNode(NodeToActivate);
 			TweensToActivate->RemoveNode(NodeToActivate, false);
 			ActiveTweens->AddTail(NodeToActivate);
 		}
@@ -82,16 +85,34 @@ public:
 		CurNode = ActiveTweens->GetHead();
 		while (CurNode != nullptr)
 		{
-			FCTweenInstance* CurTween = static_cast<FCTweenInstance*>(CurNode->GetValue());
-			CurTween->Update(UnscaledDeltaSeconds, DilatedDeltaSeconds, bIsGamePaused);
+			bool bShouldRemove = UpdateCurrentNode(CurNode, UnscaledDeltaSeconds, DilatedDeltaSeconds, bIsGamePaused);
 			TNode* NextNode = CurNode->GetNextNode();
-			if (!CurTween->bIsActive)
+			if (bShouldRemove)
 			{
 				ActiveTweens->RemoveNode(CurNode, false);
 				RecycleTween(CurNode);
 			}
 			CurNode = NextNode;
 		}
+	}
+
+	virtual bool UpdateCurrentNode(TNode* Node, float UnscaledDeltaSeconds, float DilatedDeltaSeconds, bool bIsGamePaused)
+	{
+		FCTweenInstance* Tween = reinterpret_cast<FCTweenInstance*>(Node->GetValue());
+		Tween->Update(UnscaledDeltaSeconds, DilatedDeltaSeconds, bIsGamePaused);
+		return !Tween->bIsActive;
+	}
+
+	virtual void StartNode(TNode* Node)
+	{
+		FCTweenInstance* Tween = reinterpret_cast<FCTweenInstance*>(Node->GetValue());
+		Tween->Start();
+	}
+
+	virtual void DestroyNode(TNode* Node)
+	{
+		FCTweenInstance* Tween = reinterpret_cast<FCTweenInstance*>(Node->GetValue());
+		Tween->Destroy();
 	}
 
 	void ClearActiveTweens()
@@ -102,7 +123,7 @@ public:
 			TNode* NodeToRecycle = CurNode;
 			CurNode = CurNode->GetNextNode();
 
-			NodeToRecycle->GetValue()->Destroy();
+			DestroyNode(NodeToRecycle);
 			TweensToActivate->RemoveNode(NodeToRecycle, false);
 			RecycledTweens->AddTail(NodeToRecycle);
 		}
@@ -112,6 +133,8 @@ public:
 		{
 			TNode* NodeToRecycle = CurNode;
 			CurNode = CurNode->GetNextNode();
+
+			DestroyNode(NodeToRecycle);
 			ActiveTweens->RemoveNode(NodeToRecycle, false);
 			RecycledTweens->AddTail(NodeToRecycle);
 		}
@@ -141,3 +164,5 @@ private:
 		RecycledTweens->AddTail(ToRecycle);
 	}
 };
+
+#pragma warning(pop)

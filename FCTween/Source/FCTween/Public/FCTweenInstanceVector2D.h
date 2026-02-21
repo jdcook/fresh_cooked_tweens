@@ -1,4 +1,4 @@
-﻿// MIT License - Copyright (c) 2022 Jared Cook
+﻿// MIT License - Copyright 2026 Jared Cook
 #pragma once
 
 #include "FCTweenInstance.h"
@@ -9,8 +9,7 @@ public:
 	FVector2D EndValue;
 	TFunction<void(FVector2D)> OnUpdate;
 
-	void Initialize(
-		FVector2D InStart, FVector2D InEnd, TFunction<void(FVector2D)> InOnUpdate, float InDurationSecs, EFCEase InEaseType);
+	FCTweenInstanceVector2D* Initialize(FVector2D InStart, FVector2D InEnd, TFunction<void(FVector2D)> InOnUpdate, float InDurationSecs, EFCEase InEaseType);
 
 protected:
 	virtual void ApplyEasing(float EasedPercent) override;

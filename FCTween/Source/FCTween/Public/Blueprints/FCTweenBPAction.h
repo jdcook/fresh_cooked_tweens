@@ -1,11 +1,13 @@
-﻿// MIT License - Copyright (c) 2022 Jared Cook
+﻿// MIT License - Copyright 2026 Jared Cook
 #pragma once
+#include "Curves/CurveFloat.h"
 #include "FCTweenInstance.h"
 #include "Kismet/BlueprintAsyncActionBase.h"
 
 #include "FCTweenBPAction.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTweenEventOutputPin);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTweenUpdateTransformOutputPin, FTransform, Value);
 
 UCLASS(Abstract, BlueprintType, meta = (ExposedAsyncProxy = AsyncTask))
 class FCTWEEN_API UFCTweenBPAction : public UBlueprintAsyncActionBase
@@ -42,8 +44,8 @@ public:
 	virtual void Activate() override;
 	virtual FCTweenInstance* CreateTween();
 	virtual FCTweenInstance* CreateTweenCustomCurve();
-	virtual void SetSharedTweenProperties(float InDurationSecs, float InDelay, int InLoops, float InLoopDelay, bool InbYoyo,
-		float InYoyoDelay, bool bInCanTickDuringPause, bool bInUseGlobalTimeDilation);
+	virtual void SetSharedTweenProperties(
+		float InDurationSecs, float InDelay, int InLoops, float InLoopDelay, bool InbYoyo, float InYoyoDelay, bool bInCanTickDuringPause, bool bInUseGlobalTimeDilation);
 	virtual void BeginDestroy() override;
 
 	UFUNCTION(BlueprintCallable, Category = "Tween")
@@ -52,6 +54,10 @@ public:
 	void Unpause();
 	UFUNCTION(BlueprintCallable, Category = "Tween")
 	void Restart();
+	// Stop this tween and mark it for recycling.
+	UFUNCTION(BlueprintCallable, Category = "Tween")
+	void Destroy();
+	// Stop this tween and mark it for recycling. Same as Destroy.
 	UFUNCTION(BlueprintCallable, Category = "Tween")
 	void Stop();
 	UFUNCTION(BlueprintCallable, Category = "Tween")
