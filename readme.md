@@ -197,7 +197,7 @@ PublicDependencyModuleNames.AddRange(new[] {"FCTween"});
     {
         "Name": "FCTween",
         "Type": "Runtime",
-        "LoadingPhase": "Default"
+        "LoadingPhase": "PreDefault"
     }
 ],
 ```
