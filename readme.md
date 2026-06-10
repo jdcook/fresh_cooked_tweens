@@ -94,7 +94,7 @@ UKismetMathLibrary::QuaternionSpringInterp()
 ```
 
 # Plugin Setup
-- If using Unreal 4.27, copy the contents of FCTween_4_27.uplugin into FCTween/FCTween.uplugin.
+- If using Unreal 4.27, copy the contents of FCTween_4_27.txt into FCTween/FCTween.uplugin.
 - Copy the FCTween directory into your project's Plugins folder
     - If there is no Plugins folder, create one in the same directory as your .uproject file
 
