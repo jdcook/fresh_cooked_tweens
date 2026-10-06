@@ -46,8 +46,8 @@ SourceArt/**/*.png
 SourceArt/**/*.tga
 
 # Binary Files
-Binaries/*
-Plugins/*/Binaries/*
+# FCTween is nested, so match generated directories at any depth.
+Binaries/
 
 # Builds
 Build/*
@@ -67,8 +67,7 @@ Build/*/**
 Saved/*
 
 # Compiled source files for the engine to use
-Intermediate/*
-Plugins/*/Intermediate/*
+Intermediate/
 
 # Cache files for the editor to use
 DerivedDataCache/*
